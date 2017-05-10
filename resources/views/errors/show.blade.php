@@ -1,0 +1,2 @@
+TITLE: {{$title}}
+MSG: {{$msg}}

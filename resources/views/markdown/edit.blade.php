@@ -1,0 +1,3 @@
+{{$xtoken}}
+<br/>
+{{$pubkey}}
