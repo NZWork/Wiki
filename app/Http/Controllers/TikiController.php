@@ -36,6 +36,7 @@ class TikiController extends Controller
 		$user = Session::get('user');
 		$data = [
 			'name'     => Input::get('name'),
+			'nickname' => Input::get('nickname'),
 			'bio'      => Input::get('bio'),
 			'url'      => Input::get('url'),
 			'company'  => Input::get('company'),
