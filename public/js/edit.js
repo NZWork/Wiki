@@ -98,9 +98,9 @@ function JSONToChange(json) {
 
     data = JSON.parse(json)
 
-    let obj = $('#main')
-    let pos = getCaretPosition('main')
-    let cursorDrift = false
+    var obj = $('#main')
+    var pos = getCaretPosition('main')
+    var cursorDrift = false
 
     if (data.type == INIT_MSG) {
         console.log('user data init')
@@ -149,7 +149,7 @@ function JSONToChange(json) {
     change.inputLength = data.ops.inputLength
     change.outputLength = data.ops.outputLength
 
-    let text = obj.val()
+    var text = obj.val()
     try {
         his = change.apply(text)
     } catch (e) {
@@ -170,12 +170,12 @@ function JSONToChange(json) {
 }
 
 function sync() {
-    let text = $('#main').val()
-    let diff = engine.diff_main(his, text)
+    var text = $('#main').val()
+    var diff = engine.diff_main(his, text)
     if (diff.length == 1 && diff[0][0] == 0) { // 移动，选择
         return
     }
-    let change = Changeset.fromDiff(diff)
+    var change = Changeset.fromDiff(diff)
     his = text
     ChangesetQueue.push(change)
 }
@@ -188,7 +188,7 @@ var changesetQueueConsumer = setInterval(function() {
             merged = merged.merge(ChangesetQueue.shift())
         }
         if (merged != null) {
-            let msg = changeToJSON(merged)
+            var msg = changeToJSON(merged)
             if (msg != null) {
                 sendMsg(msg)
             } else {
@@ -220,9 +220,9 @@ function connect(token, pubkey) {
     }
 
     conn.onmessage = function(e) {
-        let data = e.data
+        var data = e.data
         // console.log('received ' + data)
-        let modedPos = JSONToChange(e.data)
+        var modedPos = JSONToChange(e.data)
         if (modedPos == null) {
             return
         }
