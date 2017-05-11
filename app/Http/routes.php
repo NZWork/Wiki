@@ -50,10 +50,6 @@ Route::group(['middleware' => ['web', 'login']], function () {
 
 });
 
-Route::get('/test', 'MarkDownController@index');
-
-Route::get('/wiki', 'MarkDownController@getStroageFile');
-
 Route::group(['middleware' => ['web', 'xauth']], function () {
 	Route::post('/api/nz/login', 'UserController@login');
 	Route::post('/api/nz/user', 'UserController@userInfo');
@@ -61,6 +57,40 @@ Route::group(['middleware' => ['web', 'xauth']], function () {
 	Route::post('/api/nz/generate', 'MarkDownController@generateWiki');
 	Route::post('/api/nz/identity', 'MarkDownController@xtokenAuth');
 });
+
+
+
+
+
+//test
+
+
+Route::get('/test', 'MarkDownController@index');
+
+Route::get('/org', function (){
+	return view('tiki.newOrg');
+});
+Route::get('/repo', function (){
+	return view('tiki.newRepo');
+});
+Route::get('/profile', function (){
+	return view('tiki.profile');
+});
+Route::get('/project', function (){
+	return view('tiki.project');
+});
+Route::get('/projectSetting', function (){
+	return view('tiki.projectSetting');
+});
+Route::get('/edit', function (){
+	return view('markdown.edit');
+});
+Route::get('/setting', function (){
+	return view('user.setting');
+});
+
+Route::get('/wiki', 'MarkDownController@getStroageFile');
+
 
 
 
