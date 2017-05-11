@@ -8,6 +8,9 @@ class NamePool extends Model
 {
 	protected $table = 'name_pool';
 
+	const NAME_USER_TYPE = 1;
+	const NAME_ORG_TYPE = 2;
+
 	/**
 	 * 获取用户名
 	 * @param string $name
@@ -18,23 +21,29 @@ class NamePool extends Model
 		if(empty($name)){
 			return [];
 		}
-		$cond = ['name' => "'$name'"];
+		$cond = ['name' => $name];
 		return $this->where($cond)->first();
 	}
 
-	protected function saveName($out_id = 0, $name = '', $type = 1)
+	/**
+	 * 更新命名池数据
+	 * @param int    $out_id
+	 * @param string $name
+	 * @param int    $type
+	 * @return array
+	 */
+	protected function saveName($out_id = 0, $name = '', $type = self::NAME_USER_TYPE)
 	{
-		if(empty($uid) || empty($name)){
+		if(empty($out_id) || empty($name)){
 			return [];
 		}
 		$cond = [
 			'out_id' => $out_id,
-			'name'   => "'$name'",
 			'type'   => $type
 		];
 		$res = $this->where($cond)->first();
 		if($res){
-			return $this->where(['id' => $res['id']])->update(['name' => $name]);
+			return $this->where(['id' => $res['id']])->update(['name' => "$name"]);
 		}
 		$data = [
 			'name'   => $name,

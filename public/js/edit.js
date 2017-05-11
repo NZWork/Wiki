@@ -13,6 +13,7 @@ function initEditor(token, pubkey) {
         }
     });
 }
+
 // OT
 var Changeset = ot.Changeset;
 var engine = new diff_match_patch;

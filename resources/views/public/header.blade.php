@@ -48,9 +48,8 @@
                                                                                                 aria-hidden="true"></i>
                         <span class="caret"></span></a>
                     <ul class="dropdown-menu" aria-labelledby="download">
-                        <li><a href="http://jsfiddle.net/bootswatch/gqhenoox/">新建项目</a></li>
-                        <li><a href="http://jsfiddle.net/bootswatch/gqhenoox/">新建组织</a></li>
-
+                        <li><a href="/newOrg">新建组织</a></li>
+                        <li><a href="/newRepo">新建项目</a></li>
                     </ul>
                 </li>
                 <li class="dropdown">

@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use App\NamePool;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 
@@ -17,7 +18,7 @@ class TikiController extends Controller
 	{
 		$user = Session::get('user');
 		$data = [
-			'user' => $user->name
+			'header' => Session::get('user'),
 		];
 		return view('tiki.index')->with($data);
 	}
@@ -28,7 +29,10 @@ class TikiController extends Controller
 	 */
 	public function newOrg()
 	{
-		return view('tiki.index');
+		$data = [
+			'header' => Session::get('user'),
+		];
+		return view('tiki.newOrg')->with($data);
 	}
 
 	public function createOrg()
@@ -42,6 +46,11 @@ class TikiController extends Controller
 			'company'  => Input::get('company'),
 			'location' => Input::get('location')
 		];
-		dd($data);
+		$res = NamePool::getByName($data['name']);
+		if(empty($res)){
+			NamePool::saveName($user->uid, $data['name'], NamePool::NAME_ORG_TYPE);
+			return redirect('/center');
+		}
+		return back()->withInput()->withErrors(['组织名已被使用']);
 	}
 }
