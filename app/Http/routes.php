@@ -48,7 +48,10 @@ Route::group(['middleware' => ['web', 'login']], function () {
 	Route::get('/logout', 'UserController@logout');
 	Route::get('/center', 'TikiController@index');
 
-	Route::get('/edit', 'MarkDownController@getStroageFile');
+	Route::get('/setting', 'UserController@setting');
+
+	Route::get('/edit/{pid?}/{id?}', 'MarkDownController@getStroageFile');
+
 
 });
 
@@ -84,10 +87,6 @@ Route::get('/project', function (){
 Route::get('/projectSetting', function (){
 	return view('tiki.projectSetting');
 });
-Route::get('/setting', function (){
-	return view('user.setting');
-});
-
 Route::get('/wiki', 'MarkDownController@getStroageFile');
 
 

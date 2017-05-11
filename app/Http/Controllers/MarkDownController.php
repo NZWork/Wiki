@@ -23,10 +23,10 @@ class MarkDownController extends Controller
 	 * 打开markdown编辑器
 	 * @return $this
 	 */
-	public function getStroageFile()
+	public function getStroageFile($id = 0, $project_id = 0)
 	{
-		$id = Input::get('id');
-		$project_id = Input::get('pid');
+		/*$id = Input::get('id');
+		$project_id = Input::get('pid');*/
 		$user = Session::get('user');
 		if(empty($id) || empty($project_id)){
 			return view('errors.mdzz');

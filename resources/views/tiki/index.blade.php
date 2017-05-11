@@ -28,9 +28,9 @@
         </div>
     </div>
     <div class="row m-t-30">
-        <a class="file-list" href="/edit?pid=1&id=1">
+        <a class="file-list" href="/edit/1/1">
             <img src="https://pbs.twimg.com/profile_images/831518614561837058/ytvJfYOx_400x400.jpg" width="64px">
-            <p class="text-center"> 马越.GayHub.avi </p>
+            <p class="text-center"> 马越GayHub.avi </p>
         </a>
         <a class="file-list" href="#">
             <img src="images/file.png" width="64px">
