@@ -1,7 +1,3 @@
-{{--{{$xtoken}}
-<br/>
-{{$pubkey}}--}}
-
 <!-- header -->
 @include('public.header')
 <!-- //header -->
@@ -20,6 +16,10 @@
 <!-- //header -->
 
 <script src="editormd/editormd.min.js"></script>
+<script src="js/ot.js"></script>
+<script src="js/util.js"></script>
+<script src="js/edit.js"></script>
+
 <script type="text/javascript">
     var testEditor;
     $(function() {
@@ -30,5 +30,7 @@
             path    : "editormd/lib/"
         });
     });
-
+    $(document).ready(function(){
+        connect('{{$xtoken}}', '{{$pubkey}}')
+    })
 </script>
