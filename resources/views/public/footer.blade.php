@@ -1,4 +1,6 @@
-
+    <div class="footer">
+        <p class="text-center text-muted">&copy; 2017 <span>GayHub</span>, Inc.</p>
+    </div>
 </body>
 
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
