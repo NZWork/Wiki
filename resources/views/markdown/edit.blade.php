@@ -4,7 +4,7 @@
 
 <!-- container -->
 <div style="margin-top:64px">
-    <input class="form-control" value="Tiki Cookbook th">
+    <input class="form-control" value="Tiki Cookbook gay">
     <div id="main">
         <textarea  style="display:none;" id="content"></textarea>
     </div>

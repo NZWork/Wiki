@@ -48,6 +48,8 @@ Route::group(['middleware' => ['web', 'login']], function () {
 	Route::get('/logout', 'UserController@logout');
 	Route::get('/center', 'TikiController@index');
 
+	Route::get('/edit', 'MarkDownController@getStroageFile');
+
 });
 
 Route::group(['middleware' => ['web', 'xauth']], function () {
@@ -81,9 +83,6 @@ Route::get('/project', function (){
 });
 Route::get('/projectSetting', function (){
 	return view('tiki.projectSetting');
-});
-Route::get('/edit', function (){
-	return view('markdown.edit');
 });
 Route::get('/setting', function (){
 	return view('user.setting');
