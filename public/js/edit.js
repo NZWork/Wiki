@@ -58,23 +58,15 @@ function changeToJSON(change) {
         } else {
             shouldSend = true
         }
-
-        var insertPointer = 0
-        var deletePointer = 0
-
         switch (op) {
             case 'Retain':
                 change[i]['type'] = OP_RETAIN
                 break
             case 'Skip':
                 change[i]['type'] = OP_DELETE
-                change[i]['content'] = change.removendum.slice(deletePointer, deletePointer+change[i].length)
-                deletePointer+=change[i].length
                 break
             case 'Insert':
                 change[i]['type'] = OP_INSERT
-                change[i]['content'] = change.addendum.slice(insertPointer, insertPointer+change[i].length)
-                insertPointer+=change[i].length
                 break
             default:
         }
