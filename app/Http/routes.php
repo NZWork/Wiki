@@ -43,7 +43,9 @@ Route::group(['middleware' => ['web']], function () {
 	Route::post('/set/passwd', 'UserController@setPasswdByToken');
 });
 
-
+/**
+ * 登录中间件
+ */
 Route::group(['middleware' => ['web', 'login']], function () {
 	Route::get('/logout', 'UserController@logout');
 	Route::get('/center', 'TikiController@index');
@@ -59,11 +61,19 @@ Route::group(['middleware' => ['web', 'login']], function () {
 	Route::get('/newRepo', 'TikiController@newRepo');
 	Route::post('/createRepo', 'TikiController@createRepo');
 
+	Route::get('/project', 'TikiController@project');
+	Route::get('/projectSetting', 'TikiController@projectSetting');
+
+	Route::get('/profile', 'TikiController@profile');
+
 	Route::get('/edit/{pid?}/{id?}', 'MarkDownController@getStroageFile');
 
 
 });
 
+/**
+ * 内部接口
+ */
 Route::group(['middleware' => ['web', 'xauth']], function () {
 	Route::post('/api/nz/login', 'UserController@login');
 	Route::post('/api/nz/user', 'UserController@userInfo');
@@ -73,20 +83,9 @@ Route::group(['middleware' => ['web', 'xauth']], function () {
 });
 
 
+
 //test
-
-
 Route::get('/test', 'MarkDownController@index');
-
-Route::get('/profile', function () {
-	return view('tiki.profile');
-});
-Route::get('/project', function () {
-	return view('tiki.project');
-});
-Route::get('/projectSetting', function () {
-	return view('tiki.projectSetting');
-});
 Route::get('/wiki', 'MarkDownController@getStroageFile');
 
 

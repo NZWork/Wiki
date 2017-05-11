@@ -58,7 +58,7 @@
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="download">
-                        @if(isset($header->nickname))
+                        @if(isset($header))
                             <li><a href=""><b>{{$header->nickname}}</b></a></li>
                             <li class="divider"></li>
                             <li><a href="/center">个人主页</a></li>

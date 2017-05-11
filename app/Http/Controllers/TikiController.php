@@ -94,6 +94,10 @@ class TikiController extends Controller
 		return view('tiki.newRepo')->with($data);
 	}
 
+	/**
+	 * 创建项目
+	 * @return $this|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+	 */
 	public function createRepo()
 	{
 		$org_id = intval(Input::get('org_id'));
@@ -105,7 +109,7 @@ class TikiController extends Controller
 			//创建项目记录
 			$data = [
 				'name'        => $name,
-				'create_uid'      => $user->uid,
+				'create_uid'  => $user->uid,
 				'org_id'      => $org_id,
 				'description' => Input::get('description'),
 				'website'     => Input::get('website'),
@@ -116,5 +120,45 @@ class TikiController extends Controller
 			return redirect('/center');
 		}
 		return back()->withInput()->withErrors(['组织（或个人）下项目名已被使用']);
+	}
+
+	/**
+	 * 项目展示
+	 * @return $this
+	 */
+	public function project()
+	{
+		$user = Session::get('user');
+		$data = [
+			'header' => $user,
+			'data'   => [
+
+			]
+		];
+		return view('tiki.project')->with($data);
+	}
+
+	public function projectSetting()
+	{
+		$user = Session::get('user');
+		$data = [
+			'header'    => $user,
+			'form_data' => [
+
+			]
+		];
+		return view('tiki.projectSetting')->with($data);
+	}
+
+	public function profile()
+	{
+		$user = Session::get('user');
+		$data = [
+			'header'    => $user,
+			'form_data' => [
+
+			]
+		];
+		return view('tiki.profile')->with($data);
 	}
 }
