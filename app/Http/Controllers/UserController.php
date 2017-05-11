@@ -56,7 +56,7 @@ class UserController extends Controller
         if (!$res) {
             return Response::json(1401, [], '注册失败');
         }
-        $str = "欢迎使用Tiki,请打开以下链接激活账号\n激活地址：http://app.dev.tiki.im/activation?id=" .
+        $str = "欢迎使用Tiki,请打开以下链接激活账号\n激活地址：http://tiki.im/activation?id=" .
             $res->id . "&token=" . $res->token;
         $res = Mail::raw($str, function ($message) use ($email) {
             $message->subject('激活');
@@ -100,7 +100,7 @@ class UserController extends Controller
         }
         //auth -> token获取
         $token_url = 'https://oauth.tiki.im/token?code=' . $code .
-            '&client_id=test&grant_type=authorization_code&client_secret=12jh3gas623g&redirect_uri=https://app.dev.tiki.im/login/callback';
+            '&client_id=test&grant_type=authorization_code&client_secret=12jh3gas623g&redirect_uri=https://tiki.im/login/callback';
         $token_info = json_decode(Curl::get($token_url));
         if (empty($token_info->access_token)) {
             //return Response::json(1405, [], 'Auth token获取失败');

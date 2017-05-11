@@ -35,7 +35,7 @@ Route::group(['middleware' => ['web']], function () {
 			return redirect('/center');
 		}
 		//return view('login');
-		return redirect('https://oauth.tiki.im/auth?response_type=code&redirect_uri=https://app.dev.tiki.im/login/callback&client_id=test&state=1');
+		return redirect('https://oauth.tiki.im/auth?response_type=code&redirect_uri=https://tiki.im/login/callback&client_id=test&state=1');
 	});
 
 	Route::get('/activation', 'UserController@activation');

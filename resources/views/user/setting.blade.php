@@ -10,16 +10,25 @@
             <div class="col-xs-9">
                 <form>
                     <div class="form-group">
-                        <label for="nickname">昵称</label>
-                        <input type="text" class="form-control" id="nickname">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" id="name">
                     </div>
+                    <button type="submit" class="btn btn-sm w-md btn-success pull-right">更新</button>
+                </form>
+            </div>
+            <div class="col-xs-9">
+                <form>
                     <div class="form-group">
-                        <label for="bio">简介</label>
-                        <textarea class="form-control" rows="3" name="bio" id="bio"></textarea>
+                        <label for="nickname">Nick</label>
+                        <input type="text" class="form-control" id="nickname">
                     </div>
                     <div class="form-group">
                         <label for="url">URL</label>
                         <input type="text" class="form-control" id="url">
+                    </div>
+                    <div class="form-group">
+                        <label for="bio">简介</label>
+                        <textarea class="form-control" rows="3" name="bio" id="bio"></textarea>
                     </div>
                     <div class="form-group">
                         <label for="url">所在公司</label>
