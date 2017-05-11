@@ -15,8 +15,8 @@
 @include('public.footer')
 <!-- //header -->
 
-<script src="//cdn.bootcss.com/diff_match_patch/20121119/diff_match_patch.js"></script>
 <script src="editormd/editormd.min.js"></script>
+<script src="https://cdn.bootcss.com/diff_match_patch/20121119/diff_match_patch.js"></script>
 <script src="js/ot.js"></script>
 <script src="js/util.js"></script>
 <script src="js/edit.js"></script>
