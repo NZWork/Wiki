@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 
 class TikiController extends Controller
@@ -19,5 +20,27 @@ class TikiController extends Controller
 			'user' => $user->name
 		];
 		return view('tiki.index')->with($data);
+	}
+
+	/**
+	 * 新建组织
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+	 */
+	public function newOrg()
+	{
+		return view('tiki.index');
+	}
+
+	public function createOrg()
+	{
+		$user = Session::get('user');
+		$data = [
+			'name'     => Input::get('name'),
+			'bio'      => Input::get('bio'),
+			'url'      => Input::get('url'),
+			'company'  => Input::get('company'),
+			'location' => Input::get('location')
+		];
+		dd($data);
 	}
 }

@@ -8,14 +8,14 @@
         <div class="col-xs-8 col-xs-offset-2">
             <h4>ID 设置</h4>
             <div class="col-xs-9">
-                <form action="/idSetting" method="post">
+                <form action="/nameSetting" method="post">
                     <div class="form-group">
                         <label for="name">Email</label>
-                        <input type="text" class="form-control" id="email" name="email" disabled>
+                        <input type="text" class="form-control" id="email" name="email" value="{{$form_data['email']}}" disabled>
                     </div>
                     <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" class="form-control" id="name" name="name">
+                        <label for="name">UserName</label>
+                        <input type="text" class="form-control" id="name" name="name" value="{{$form_data['name']}}">
                     </div>
                     <button type="submit" class="btn btn-sm w-md btn-success pull-right">更新</button>
                 </form>
@@ -39,24 +39,27 @@
             <div class="col-xs-9">
                 <form action="/userSetting" method="post">
                     <div class="form-group">
-                        <label for="nickname">Nick</label>
-                        <input type="text" class="form-control" id="nick" name="nick">
+                        <label for="nickname">NickName</label>
+                        <input type="text" class="form-control" id="nickname" name="nickname"
+                               value="{{$form_data['nickname']}}">
                     </div>
                     <div class="form-group">
                         <label for="url">Url</label>
-                        <input type="text" class="form-control" id="url" name="url">
+                        <input type="text" class="form-control" id="url" name="url" value="{{$form_data['url']}}">
                     </div>
                     <div class="form-group">
                         <label for="bio">简介</label>
-                        <textarea class="form-control" rows="3" id="bio" name="bio"></textarea>
+                        <textarea class="form-control" rows="3" id="bio" name="bio">{{$form_data['bio']}}</textarea>
                     </div>
                     <div class="form-group">
                         <label for="url">所在公司</label>
-                        <input type="text" class="form-control" id="company" name="company">
+                        <input type="text" class="form-control" id="company" name="company"
+                               value="{{$form_data['company']}}">
                     </div>
                     <div class="form-group">
                         <label for="location">所在地</label>
-                        <input type="text" class="form-control" id="location" name="location">
+                        <input type="text" class="form-control" id="location" name="location"
+                               value="{{$form_data['location']}}">
                     </div>
                     <button type="submit" class="btn btn-sm w-md btn-success pull-right">更新</button>
                 </form>

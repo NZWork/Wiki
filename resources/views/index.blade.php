@@ -9,7 +9,7 @@
     <meta property="og:site_name" content="碳 - 优雅极简的知识库">
     <meta property="og:description" content="优雅极简的知识库">
     <link href="https://cdn.bootcss.com/normalize/5.0.0/normalize.min.css" rel="stylesheet">
-    <link href="css/tiki.css" rel="stylesheet">
+    <link href="/css/tiki.css" rel="stylesheet">
     <link rel="apple-touch-icon" href="images/logo.png">
     <link rel="shortcut icon" href="images/logo.png">
 

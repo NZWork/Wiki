@@ -1,5 +1,5 @@
     <div class="footer">
-        <p class="text-center text-muted">&copy; 2017 <span>GayHub</span>, Inc.</p>
+        <p class="text-center text-muted">&copy; 2017 <span>GayHub - Neo</span>, Inc.</p>
     </div>
 </body>
 

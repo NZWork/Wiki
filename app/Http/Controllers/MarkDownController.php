@@ -75,7 +75,7 @@ class MarkDownController extends Controller
 			return Response::json(2401, [], '参数错误');
 		}
 		$res = $this->_redisOp($project_id, $token);
-		if($res){
+		if($res !== FALSE){
 			RedisDB::del(Def::REDIS_MARKDOWN_KEY . $project_id . "_$token");
 			return Response::json(2201, [], '落盘成功');
 		}
@@ -118,7 +118,12 @@ class MarkDownController extends Controller
 			return FALSE;
 		}
 		$data = RedisDB::get(Def::REDIS_MARKDOWN_KEY . $project_id . "_$token");
-		$md = fopen(Def::MARKDOWN_ROOT_PATH . "/$project_id/" . Def::MARKDOWN_TYPE_ORIGIN_PATH . "/$token", "w+");
+		$path = Def::MARKDOWN_ROOT_PATH . "/$project_id/";
+		if(!is_readable($path)){
+			is_file($path) or mkdir($path, 0777);
+			is_file($path) or mkdir($path . Def::MARKDOWN_TYPE_ORIGIN_PATH . "/", 0777);
+		}
+		$md = fopen($path . Def::MARKDOWN_TYPE_ORIGIN_PATH . "/" . $token, "w+");
 		$res = fwrite($md, $data);
 		fclose($md);
 		return $res;

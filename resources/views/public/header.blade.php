@@ -22,9 +22,9 @@
     <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/bootstrap-select/2.0.0-beta1/css/bootstrap-select.min.css" rel="stylesheet">
     <link href="https://cdn.bootcss.com/sweetalert/1.1.3/sweetalert.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="editormd/css/editormd.min.css" />
+    <link rel="stylesheet" href="/editormd/css/editormd.min.css"/>
 
-    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="/css/app.css">
 </head>
 
 <body>
@@ -34,7 +34,7 @@
 <div class="navbar navbar-default navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
-            <a href="../" class="navbar-brand">Tiki-T</a>
+            <a href="../" class="navbar-brand">Tiki</a>
             <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -44,7 +44,9 @@
         <div class="navbar-collapse collapse" id="navbar-main">
             <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download"><i class="fa fa-plus" aria-hidden="true"></i> <span class="caret"></span></a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download"><i class="fa fa-plus"
+                                                                                                aria-hidden="true"></i>
+                        <span class="caret"></span></a>
                     <ul class="dropdown-menu" aria-labelledby="download">
                         <li><a href="http://jsfiddle.net/bootswatch/gqhenoox/">新建项目</a></li>
                         <li><a href="http://jsfiddle.net/bootswatch/gqhenoox/">新建组织</a></li>
@@ -53,16 +55,20 @@
                 </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download">
-                        <img src="https://pbs.twimg.com/profile_images/831518614561837058/ytvJfYOx_400x400.jpg" class="img-rounded" width="20px" height="20px">
+                        <img src="https://pbs.twimg.com/profile_images/831518614561837058/ytvJfYOx_400x400.jpg"
+                             class="img-rounded" width="20px" height="20px">
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="download">
-                        <li><a href=""><b>GaLiGayGay Neo</b></a></li>
-                        <li class="divider"></li>
-                        <li><a href="http://jsfiddle.net/bootswatch/gqhenoox/">个人主页</a></li>
-                        <li><a href="./bootstrap.min.css">账号设置</a></li>
-                        <li><a href="./bootstrap.css">帮助</a></li>
-                        <li><a href="./variables.less">退出</a></li>
+                        @if(isset($header->nickname))
+                            <li><a href=""><b>{{$header->nickname}}</b></a></li>
+                            <li class="divider"></li>
+                            <li><a href="/center">个人主页</a></li>
+                            <li><a href="/setting">账号设置</a></li>
+                            <li><a href="https://pan.tiki.im">网盘</a></li>
+                            <li><a href="http://www.baidu.com">帮助</a></li>
+                            <li><a href="/logout">退出</a></li>
+                        @endif
                     </ul>
                 </li>
             </ul>

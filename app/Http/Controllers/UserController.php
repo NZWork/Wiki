@@ -8,9 +8,11 @@
 
 namespace App\Http\Controllers;
 
+use App\NamePool;
 use Mail;
 use Validator;
 use App\User;
+use App\UserAttr;
 use App\Http\Commons\Curl;
 use App\Http\Commons\Response;
 use Illuminate\Support\Facades\Hash;
@@ -57,6 +59,7 @@ class UserController extends Controller
 		if(!$res){
 			return Response::json(1401, [], '注册失败');
 		}
+		UserAttr::add(['uid' => $res->id, 'nickname' => $res->name]);
 		$str = "欢迎使用Tiki,请打开以下链接激活账号\n激活地址：http://tiki.im/activation?id=" .
 			$res->id . "&token=" . $res->token;
 		$res = Mail::raw($str, function ($message) use ($email) {
@@ -77,9 +80,11 @@ class UserController extends Controller
 		if(empty($user)){
 			return Response::json(1403, [], '用户信息获取失败');
 		}
+		$nickname = UserAttr::getNickNameByUid($uid);
 		return Response::json(1203, [
 			'uid'        => $user['id'],
 			'avatar'     => '',
+			'nickname'   => $nickname,
 			'email'      => $user['email'],
 			'name'       => $user['name'],
 			'status'     => $user['status'],
@@ -177,23 +182,68 @@ class UserController extends Controller
 		]);
 	}
 
+	/**
+	 * 设置页
+	 * @return $this
+	 */
 	public function setting()
 	{
 		$user = Session::get('user');
-		dd($user);
+		$info = UserAttr::getByUid($user->uid);
 		$data = [
-			'name' => $user->name,
-			'email'
+			'header'    => $user,
+			'form_data' => [
+				'name'     => $user->name,
+				'email'    => $user->email,
+				'nickname' => $info['nickname'],
+				'url'      => $info['url'],
+				'bio'      => $info['bio'],
+				'company'  => $info['company'],
+				'location' => $info['location']
+			]
 		];
-		return view('tiki.index')->with($data);
+		return view('user.setting')->with($data);
 	}
 
+	/**
+	 * 用户名设置
+	 * @return $this|\Illuminate\Http\RedirectResponse
+	 */
 	public function NameSetting()
 	{
+		$user = Session::get('user');
+		$name = Input::get('name');
+		if($user->name !== $name){
+			$res = NamePool::getByName($name);
+			if(empty($res)){
+				User::updateInfo(['name' => "'$name'"], ['id' => $user->uid]);
+				NamePool::saveName($user->uid, $name);
+				$user->name = $name;
+				Session::put('user', $user);
+				return redirect()->action('UserController@setting');
+			}
+		}
+		return back()->withInput();
+	}
+
+	/**
+	 * 用户信息更新
+	 * @return \Illuminate\Http\RedirectResponse
+	 */
+	public function userSetting()
+	{
+		$user = Session::get('user');
 		$data = [
-			Input::get(''),
+			'nickname' => Input::get('nickname'),
+			'url'      => Input::get('url'),
+			'bio'      => Input::get('bio'),
+			'company'  => Input::get('company'),
+			'location' => Input::get('location')
 		];
-		dd($data);
+		UserAttr::saveInfo($data, $user->uid);
+		$user->nickname = $data['nickname'];
+		Session::put('user', $user);
+		return redirect()->action('UserController@setting');
 	}
 
 	public function logout()

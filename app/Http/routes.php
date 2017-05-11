@@ -31,7 +31,7 @@ Route::get('/test', 'TestController@index');
 Route::group(['middleware' => ['web']], function () {
 	Route::get('/login', function () {
 		$session = \Illuminate\Support\Facades\Session::get('user');
-		if($session && \App\User::checkMiddleLogin($session->uid, $session->email)){
+		if(isset($session->uid) && \App\User::checkMiddleLogin($session->uid, $session->email)){
 			return redirect('/center');
 		}
 		//return view('login');
@@ -49,6 +49,11 @@ Route::group(['middleware' => ['web', 'login']], function () {
 	Route::get('/center', 'TikiController@index');
 
 	Route::get('/setting', 'UserController@setting');
+	Route::post('/nameSetting', 'UserController@nameSetting');
+	Route::post('/userSetting', 'UserController@userSetting');
+
+	Route::get('/newOrg', 'TikiController@newOrg');
+	Route::post('/createOrg', 'TikiController@createOrg');
 
 	Route::get('/edit/{pid?}/{id?}', 'MarkDownController@getStroageFile');
 
@@ -64,27 +69,24 @@ Route::group(['middleware' => ['web', 'xauth']], function () {
 });
 
 
-
-
-
 //test
 
 
 Route::get('/test', 'MarkDownController@index');
 
-Route::get('/org', function (){
+Route::get('/org', function () {
 	return view('tiki.newOrg');
 });
-Route::get('/repo', function (){
+Route::get('/repo', function () {
 	return view('tiki.newRepo');
 });
-Route::get('/profile', function (){
+Route::get('/profile', function () {
 	return view('tiki.profile');
 });
-Route::get('/project', function (){
+Route::get('/project', function () {
 	return view('tiki.project');
 });
-Route::get('/projectSetting', function (){
+Route::get('/projectSetting', function () {
 	return view('tiki.projectSetting');
 });
 Route::get('/wiki', 'MarkDownController@getStroageFile');
