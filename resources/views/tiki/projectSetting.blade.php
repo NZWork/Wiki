@@ -3,7 +3,7 @@
 <!-- //header -->
 
 <!-- container -->
-<div class="container" style="margin-top: 70px">
+<div class="container">
     <div class="row m-t-40">
         <div class="col-xs-12 col-sm-8 col-sm-offset-2">
             <h3>x\hello-tiki</h3>

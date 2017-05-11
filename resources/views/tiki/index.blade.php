@@ -4,7 +4,7 @@
 
 
 <!-- container -->
-<div class="container" style="margin-top: 70px">
+<div class="container">
     <div class="row">
         <div class="col-xs-12 m-b-10">
             <h4>x/马越大爷</h4>

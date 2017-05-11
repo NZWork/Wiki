@@ -216,7 +216,7 @@ class UserController extends Controller
 		if($user->name !== $name){
 			$res = NamePool::getByName($name);
 			if(empty($res)){
-				User::updateInfo(['name' => "'$name'"], ['id' => $user->uid]);
+				User::updateInfo(['name' => $name], ['id' => $user->uid]);
 				NamePool::saveName($user->uid, $name);
 				$user->name = $name;
 				Session::put('user', $user);

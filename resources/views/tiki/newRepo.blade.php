@@ -3,28 +3,34 @@
 <!-- //header -->
 
 <!-- container -->
-<div class="container" style="margin-top: 70px">
+<div class="container">
     <div class="row m-t-40">
         <div class="col-xs-12 col-sm-6 col-sm-offset-2">
             <h3>创建新项目</h3>
-            <form>
+            <form action="/createRepo" method="post">
                 <div class="form-group">
                     <div class="col-xs-3">
                         <label for="product-owner">所有者</label>
-                        <select class="selectpicker" data-style="btn-primary" id="product-owner">
-                            <option value="">x</option>
-                            <option value="">GayHub</option>
+                        <select class="selectpicker" data-style="btn-primary" id="product-owner" name="org_id">
+                            <option value="0">x</option>
+                            <option value="6">GayHub</option>
                         </select>
                     </div>
                     <div class="col-xs-8">
                         <label for="project-name">项目名</label>
-                        <input type="text" class="form-control" placeholder="hello-tiki" id="project-name">
+                        <input type="text" class="form-control" placeholder="hello-tiki" id="project-name" name="name" value="{{old('name')}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <label for="project-description">项目站点 (可选)</label>
+                        <input type="text" class="form-control" id="project-website" name="website" value="{{old('website')}}">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-xs-12">
                         <label for="project-description">介绍 (可选)</label>
-                        <input type="text" class="form-control input-sm" id="project-description">
+                        <input type="text" class="form-control" id="project-description" name="description" value="{{old('description')}}">
                     </div>
                 </div>
 

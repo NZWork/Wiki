@@ -55,6 +55,10 @@ Route::group(['middleware' => ['web', 'login']], function () {
 	Route::get('/newOrg', 'TikiController@newOrg');
 	Route::post('/createOrg', 'TikiController@createOrg');
 
+
+	Route::get('/newRepo', 'TikiController@newRepo');
+	Route::post('/createRepo', 'TikiController@createRepo');
+
 	Route::get('/edit/{pid?}/{id?}', 'MarkDownController@getStroageFile');
 
 
@@ -74,9 +78,6 @@ Route::group(['middleware' => ['web', 'xauth']], function () {
 
 Route::get('/test', 'MarkDownController@index');
 
-Route::get('/repo', function () {
-	return view('tiki.newRepo');
-});
 Route::get('/profile', function () {
 	return view('tiki.profile');
 });

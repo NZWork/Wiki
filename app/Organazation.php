@@ -9,6 +9,21 @@ class Organazation extends Model
 	//protected $table = '';
 
 	/**
+	 * 根据id获取组织信息
+	 * @param int $id
+	 * @return array
+	 */
+	protected function getById($id = 0)
+	{
+		$id = intval($id);
+		if(empty($id)){
+			return [];
+		}
+		$cond = ['id' => $id];
+		return $this->where($cond)->first();
+	}
+
+	/**
 	 * 根据名称获取组织
 	 * @param string $name
 	 * @return array
@@ -22,6 +37,11 @@ class Organazation extends Model
 		return $this->where($cond)->first();
 	}
 
+	/**
+	 * 增加组织
+	 * @param array $data
+	 * @return array|bool
+	 */
 	protected function addOrg($data = [])
 	{
 		if(empty($data)){
@@ -34,6 +54,21 @@ class Organazation extends Model
 			return $this->getByName($data['name']);
 		}
 		return FALSE;
+	}
+
+	/**
+	 * 获取组织名
+	 * @param int $id
+	 * @return array
+	 */
+	protected function getNameById($id = 0)
+	{
+		$id = intval($id);
+		if(empty($id)){
+			return [];
+		}
+		$cond = ['id' => $id];
+		return $this->where($cond)->value('name');
 	}
 
 }
