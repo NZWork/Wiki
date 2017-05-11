@@ -74,9 +74,6 @@ Route::group(['middleware' => ['web', 'xauth']], function () {
 
 Route::get('/test', 'MarkDownController@index');
 
-Route::get('/org', function () {
-	return view('tiki.newOrg');
-});
 Route::get('/repo', function () {
 	return view('tiki.newRepo');
 });

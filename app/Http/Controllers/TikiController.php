@@ -9,6 +9,8 @@
 namespace App\Http\Controllers;
 
 use App\NamePool;
+use App\Organazation;
+use App\UserAttr;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
 
@@ -37,19 +39,24 @@ class TikiController extends Controller
 
 	public function createOrg()
 	{
+		$name = Input::get('name');
 		$user = Session::get('user');
-		$data = [
-			'name'     => Input::get('name'),
-			'nickname' => Input::get('nickname'),
-			'bio'      => Input::get('bio'),
-			'url'      => Input::get('url'),
-			'company'  => Input::get('company'),
-			'location' => Input::get('location')
-		];
-		$res = NamePool::getByName($data['name']);
+		$res = NamePool::getByName($name);
 		if(empty($res)){
-			NamePool::saveName($user->uid, $data['name'], NamePool::NAME_ORG_TYPE);
-			return redirect('/center');
+			NamePool::saveName($user->uid, $name, NamePool::NAME_ORG_TYPE);
+			$res = Organazation::addOrg(['name' => $name, 'create_uid' => $user->uid]);
+			if($res->id){
+				$data = [
+					'out_id'   => $res->id,
+					'nickname' => Input::get('nickname'),
+					'bio'      => Input::get('bio'),
+					'url'      => Input::get('url'),
+					'company'  => Input::get('company'),
+					'location' => Input::get('location'),
+				];
+				UserAttr::addAttr($data, NamePool::NAME_ORG_TYPE);
+				return redirect('/center');
+			}
 		}
 		return back()->withInput()->withErrors(['组织名已被使用']);
 	}

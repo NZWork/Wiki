@@ -59,7 +59,7 @@ class UserController extends Controller
 		if(!$res){
 			return Response::json(1401, [], '注册失败');
 		}
-		UserAttr::add(['uid' => $res->id, 'nickname' => $res->name]);
+		UserAttr::addAttr(['out_id' => $res->id, 'nickname' => $res->name]);
 		$str = "欢迎使用Tiki,请打开以下链接激活账号\n激活地址：http://tiki.im/activation?id=" .
 			$res->id . "&token=" . $res->token;
 		$res = Mail::raw($str, function ($message) use ($email) {
