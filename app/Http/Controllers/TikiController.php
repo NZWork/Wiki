@@ -138,6 +138,10 @@ class TikiController extends Controller
 		return view('tiki.project')->with($data);
 	}
 
+	/**
+	 * 项目管理页
+	 * @return $this
+	 */
 	public function projectSetting()
 	{
 		$user = Session::get('user');
@@ -150,6 +154,18 @@ class TikiController extends Controller
 		return view('tiki.projectSetting')->with($data);
 	}
 
+	/**
+	 * 项目编辑
+	 */
+	public function repoSetting()
+	{
+
+	}
+
+	/**
+	 * 用户主页
+	 * @return $this
+	 */
 	public function profile()
 	{
 		$user = Session::get('user');

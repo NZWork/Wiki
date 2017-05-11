@@ -63,11 +63,11 @@ Route::group(['middleware' => ['web', 'login']], function () {
 
 	Route::get('/project', 'TikiController@project');
 	Route::get('/projectSetting', 'TikiController@projectSetting');
+	Route::post('/repoSetting', 'TikiController@repoSetting');
 
 	Route::get('/profile', 'TikiController@profile');
 
 	Route::get('/edit/{pid?}/{id?}', 'MarkDownController@getStroageFile');
-
 
 });
 
