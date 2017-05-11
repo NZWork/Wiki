@@ -17,26 +17,32 @@
                 </div>
                 <div class="form-group">
                     <div class="col-xs-12">
+                        <label for="project-name">别名</label>
+                        <input type="text" class="form-control" id="org-nickname" name="nickname">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-12">
                         <label for="project-description">介绍 (可选)</label>
-                        <input type="text" class="form-control" placeholder="组织介绍" id="org-bio" name="bio">
+                        <input type="text" class="form-control" id="org-bio" name="bio">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-xs-12">
                         <label for="project-description">组织主页</label>
-                        <input type="text" class="form-control" placeholder="组织介绍" id="org-url" name="url">
+                        <input type="text" class="form-control" id="org-url" name="url">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-xs-12">
                         <label for="project-description">所属公司</label>
-                        <input type="text" class="form-control" placeholder="组织介绍" id="org-company" name="company">
+                        <input type="text" class="form-control" id="org-company" name="company">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-xs-12">
                         <label for="project-description">所属地区</label>
-                        <input type="text" class="form-control" placeholder="组织介绍" id="org-location" name="location">
+                        <input type="text" class="form-control" id="org-location" name="location">
                     </div>
                 </div>
                 <button type="submit" class="btn btn-success btn-sm m-t-30 pull-right">创建组织</button>
