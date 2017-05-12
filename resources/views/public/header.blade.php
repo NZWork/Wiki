@@ -26,7 +26,7 @@
 
     <link rel="stylesheet" href="/css/app.css">
     <link rel="stylesheet" href="/css/iconfont.css">
-    <script src="/js/iconfont.js">
+    <script src="/js/iconfont.js"></script>
 
 </head>
 

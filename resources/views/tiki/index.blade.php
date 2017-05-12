@@ -34,22 +34,36 @@
         @if($file['type'] == 1)
         <!-- 文档 -->
         <div class="file-list">
-            <svg class="icon" aria-hidden="true" style="width: 64px" onclick="deleteFile('{{ $file['id'] }}')">
-                <use xlink:href="#icon-shanchudelete31"></use>
-            </svg>
+            <div class="delete">
+                <svg class="icon pull-right" aria-hidden="true" onclick="deleteFile('{{ $file['id'] }}')">
+                    <use xlink:href="#icon-shanchudelete31"></use>
+                </svg>
+            </div>
             <a target="_blank" href="/edit/{{ $file['out_id'] }}/{{ $file['id'] }}">
-                <svg class="icon" aria-hidden="true" style="width: 64px">
+                <svg class="icon" aria-hidden="true" style="width: 64px; height: 64px;">
                   <use xlink:href="#icon-wenjian"></use>
+                </svg>
+                <p class="text-center">{{ $file['name'] }}</p>
+            </a>
+        </div>
+        @elseif($file['type'] == 2)
+        <div class="file-list">
+            <div class="delete">
+                <svg class="icon pull-right" aria-hidden="true" onclick="deleteFile('{{ $file['id'] }}')">
+                    <use xlink:href="#icon-shanchudelete31"></use>
+                </svg>
+            </div>
+            <a target="_blank" href="/open?dir_id={{ $file['id'] }}">
+                <svg class="icon" aria-hidden="true" style="width: 64px; height: 64px;">
+                  <use xlink:href="#icon-wenjianjia"></use>
                 </svg>
                 <p class="text-center">{{ $file['name'] }}</p>
             </a>
         </div>
         @else
         <a class="file-list" href="/open?dir_id={{ $file['id'] }}">
-            <svg class="icon" aria-hidden="true" style="width: 64px">
-                @if($file['type'] == 2)
-                <use xlink:href="#icon-wenjianjia"></use>
-                @elseif($file['type'] == 3)
+            <svg class="icon" aria-hidden="true" style="width: 64px; height: 64px;">
+                @if($file['type'] == 3)
                 <use xlink:href="#icon-project"></use>
                 @elseif($file['type'] == 4)
                 <use xlink:href="#icon-zuzhi_hover"></use>
