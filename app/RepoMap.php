@@ -36,4 +36,24 @@ class RepoMap extends Model
 		return $this->insert($data);
 	}
 
+	/**
+	 * 验证项目编辑权限
+	 * @param $uid
+	 * @param $repo_id
+	 * @return array
+	 */
+	protected function checkEdit($uid, $repo_id)
+	{
+		$uid = intval($uid);
+		$repo_id = intval($repo_id);
+		if(empty($uid) || empty($repo_id)){
+			return [];
+		}
+		$cond = [
+			'uid'     => $uid,
+			'repo_id' => $repo_id
+		];
+		return $this->where($cond)->first();
+	}
+
 }

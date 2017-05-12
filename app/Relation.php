@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 class Relation extends Model
 {
 	const DIR_TYPE_USER = 1;
+	const DIR_TYPE_FILE = 1;
 	const DIR_TYPE_FOLDER = 2;
 	const DIR_TYPE_REPO = 3;
 	const DIR_TYPE_ORG = 4;
@@ -24,14 +25,14 @@ class Relation extends Model
 	 * @param int $id
 	 * @return array
 	 */
-	protected function get($pid = 0, $id = 0, $type = self::DIR_TYPE_REPO)
+	protected function getToken($out_id = 0, $id = 0, $type = self::DIR_TYPE_FILE)
 	{
-		if(empty($pid) || empty($id)){
+		if(empty($out_id) || empty($id)){
 			return [];
 		}
 		$cond = [
 			'id'     => $id,
-			'out_id' => $pid,
+			'out_id' => $out_id,
 			'type'   => $type
 		];
 		return $this->where($cond)->first();
@@ -43,10 +44,10 @@ class Relation extends Model
 	 * @param string $token
 	 * @return bool
 	 */
-	protected function checkSetStroage($pid = 0, $token = '', $type = self::DIR_TYPE_REPO)
+	protected function checkSetStroage($out_id = 0, $token = '', $type = self::DIR_TYPE_REPO)
 	{
 		$cond = [
-			'out_id' => $pid,
+			'out_id' => $out_id,
 			'token'  => $token,
 			'type'   => $type
 		];
@@ -58,21 +59,40 @@ class Relation extends Model
 	 * @param int $project_id
 	 * @return array
 	 */
-	protected function getByProject($pid = 0, $type = self::DIR_TYPE_REPO)
+	protected function getByProject($out_id = 0, $type = self::DIR_TYPE_REPO)
 	{
-		$project_id = intval($pid);
-		if(!$project_id){
+		$out_id = intval($out_id);
+		if(!$out_id){
 			return [];
 		}
 		$cond = [
-			'out_id' => $project_id,
+			'out_id' => $out_id,
 			'type'   => $type
 		];
 		return $this->where($cond)->where('token', '!=', '')->get();
 	}
 
-	public function addDir($data, $type)
+	/**
+	 * 添加记录
+	 * @param     $data
+	 * @param int $type
+	 * @return array
+	 */
+	protected function addDir($data, $type = self::DIR_TYPE_REPO)
 	{
+		if(empty($data)){
+			return [];
+		}
+		$data['type'] = $type;
+		return $this->insertGetId($data);
+	}
 
+	protected function getId($out_id = 0, $type = self::DIR_TYPE_ORG)
+	{
+		$cond = [
+			'out_id' => $out_id,
+			'type'   => $type
+		];
+		return $this->where($cond)->first();
 	}
 }
