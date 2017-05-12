@@ -25,7 +25,7 @@
             @endif
             <div class="pull-right">
                 @if(count($path) > 2)
-                <a href="#" class="btn btn-sm btn-default">生成 Wiki</a>
+                <a href="/generate?pid={{ $obId }}" class="btn btn-sm btn-default">生成 Wiki</a>
                 @endif
                 @if(count($path) > 1)
                 @if(count($path) == 2)
