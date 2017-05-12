@@ -274,6 +274,7 @@ class TikiController extends Controller
 	public function project()
 	{
 		$user = Session::get('user');
+		$repo_id = Input::get('id');
 		$data = [
 			'header' => $user,
 			'data'   => [
