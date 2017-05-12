@@ -33,6 +33,7 @@
                 <a href="/orgSetting/{{ $obId }}" class="btn btn-sm btn-default">设置</a>
                 <!-- 项目 -->
                 @elseif(count($path) > 2)
+                <a href="/project/{{ $obId }}" class="btn btn-sm btn-default">主页</a>
                 <a href="/projectSetting/{{ $obId }}" class="btn btn-sm btn-default">设置</a>
                 @endif
                 @endif
