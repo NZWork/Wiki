@@ -3,8 +3,8 @@
 <!-- //header -->
 
 <!-- container -->
-<div style="margin-top:64px">
-    <input class="form-control" value="Tiki Cookbook Gaygay">
+<div>
+    <input disabled class="form-control" value="{{ $title }}">
     <div id="main">
         <textarea  style="display:none;" id="content"></textarea>
     </div>
