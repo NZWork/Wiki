@@ -38,6 +38,7 @@ class MarkDownController extends Controller
 			$md = file_get_contents(Def::MARKDOWN_ROOT_PATH . "/$project_id/" . Def::MARKDOWN_TYPE_ORIGIN_PATH . "/$token");
 			RedisDB::set(Def::REDIS_MARKDOWN_KEY . $project_id . "_$token", $md);
 		}
+		$title = Relation::getById($id);
 		$xtoken = XToken::encrypt([
 			'token'      => $token,
 			'project_id' => $project_id,
@@ -45,6 +46,7 @@ class MarkDownController extends Controller
 			'time'       => time()
 		]);
 		return view('markdown.edit')->with([
+			'title'  => $title['name'],
 			'xtoken' => $xtoken['token'],
 			'pubkey' => $xtoken['pubkey']
 		]);

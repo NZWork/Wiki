@@ -178,7 +178,7 @@ var changesetQueueConsumer = setInterval(function() {
             if (msg != null) {
                 sendMsg(msg)
             } else {
-                ChangesetQueueLock = true // lock
+                // ChangesetQueueLock = true // lock
             }
         }
     }
