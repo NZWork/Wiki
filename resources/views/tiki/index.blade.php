@@ -63,7 +63,7 @@
                     <use xlink:href="#icon-shanchudelete31"></use>
                 </svg>
             </div>
-            <a target="_blank" href="/open?dir_id={{ $file['id'] }}">
+            <a href="/open?dir_id={{ $file['id'] }}">
                 <svg class="icon" aria-hidden="true" style="width: 48px; height: 48px;">
                   <use xlink:href="#icon-wenjianjia"></use>
                 </svg>
