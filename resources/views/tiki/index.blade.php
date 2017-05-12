@@ -40,7 +40,7 @@
                 </svg>
             </div>
             <a target="_blank" href="/edit/{{ $file['out_id'] }}/{{ $file['id'] }}">
-                <svg class="icon" aria-hidden="true" style="width: 64px; height: 64px;">
+                <svg class="icon" aria-hidden="true" style="width: 48px; height: 48px;">
                   <use xlink:href="#icon-wenjian"></use>
                 </svg>
                 <p class="text-center">{{ $file['name'] }}</p>
@@ -54,7 +54,7 @@
                 </svg>
             </div>
             <a target="_blank" href="/open?dir_id={{ $file['id'] }}">
-                <svg class="icon" aria-hidden="true" style="width: 64px; height: 64px;">
+                <svg class="icon" aria-hidden="true" style="width: 48px; height: 48px;">
                   <use xlink:href="#icon-wenjianjia"></use>
                 </svg>
                 <p class="text-center">{{ $file['name'] }}</p>
@@ -62,7 +62,7 @@
         </div>
         @else
         <a class="file-list" href="/open?dir_id={{ $file['id'] }}">
-            <svg class="icon" aria-hidden="true" style="width: 64px; height: 64px;">
+            <svg class="icon" aria-hidden="true" style="width: 48px; height: 48px;">
                 @if($file['type'] == 3)
                 <use xlink:href="#icon-project"></use>
                 @elseif($file['type'] == 4)
