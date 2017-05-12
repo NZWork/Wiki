@@ -435,7 +435,7 @@ class TikiController extends Controller
 	/**
 	 * 移除用户
 	 */
-	public function delRepoMapByUser()
+	public function delRepoUser()
 	{
 		$id = Input::get('id');
 		$repo_id = Input::get('repo_id');
@@ -448,5 +448,10 @@ class TikiController extends Controller
 			return Response::json(200, [], '移除成功');
 		}
 		return Response::json(400, [], '操作异常');
+	}
+
+	public function addRepoUser()
+	{
+		
 	}
 }
