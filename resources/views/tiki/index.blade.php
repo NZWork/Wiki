@@ -76,7 +76,6 @@
                     type: "POST",
                     url: "/newFile",
                     data: {
-                        id: {{ $out_id }},
                         name: inputValue,
                         type: isFile ? 1 : 2
                     },
