@@ -126,19 +126,34 @@ class TikiController extends Controller
 	{
 		$dir_id = intval(Input::get('dir_id'));
 		$user = Session::get('user');
-		$rela = Relation::getById($dir_id);
-		if($rela['type'] == Relation::DIR_TYPE_ORG){
-			$res = OrgMap::checkAuth($user->uid, $rela['out_id']);
-		} else{
-			$res = RepoMap::checkAuth($user->uid, $rela['out_id']);
+		$res = FALSE;
+		if($dir_id){
+			$rela = Relation::getById($dir_id);
+			if($rela['type'] == Relation::DIR_TYPE_ORG){
+				$res = OrgMap::checkAuth($user->uid, $rela['out_id']);
+			} else{
+				$res = RepoMap::checkAuth($user->uid, $rela['out_id']);
+			}
 		}
-		if($rela){
-			$path = Session::get('path');
-			$path[] = [
-				'dir_id' => $dir_id,
-				'name'   => Relation::getName($dir_id)
-			];
-			Session::put('path', $path);
+		if($res || !$dir_id){
+			$dir = Relation::getById($dir_id);
+			$path = [];
+			while(!empty($dir) && $dir['parent']){
+				$path[] = [
+					'dir_id' => $dir['id'],
+					'name'   => $dir['name']
+				];
+				$dir = Relation::getById($dir['parent']);
+			}
+			if(isset($rela)){
+				$path[] = ['dir_id' => $dir_id, 'name' => $rela['name']];
+			}
+			$path[] = ['dir_id' => 0, 'name' => '仪表盘'];
+			$temp = [];
+			for($i = (count($path) - 1); $i >= 0; $i--){
+				$temp[] = $path[$i];
+			}
+			Session::put('path', $temp);
 			Session::put('dir_id', $dir_id);
 			return redirect('/center');
 		}
@@ -250,7 +265,7 @@ class TikiController extends Controller
 				'out_id'     => $repo_id,
 				'create_uid' => $user->uid,
 				'name'       => $name,
-				'parent'     => $rela->id,
+				'parent'     => isset($rela['id']) ? $rela->id : 0,
 			], Relation::DIR_TYPE_REPO);
 			return redirect('/center');
 		}
