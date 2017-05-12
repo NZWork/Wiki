@@ -171,7 +171,7 @@
 
     $('#genPro').on('click', function(){
         $.ajax({
-            type: "POST",
+            type: "GET",
             url: "/generate",
             data: {
                 'pid': {{ $obId }},
@@ -179,7 +179,7 @@
             cache: false,
             success: function(data) {
                 if (data.code == 2203) {
-                    swal('删除成功')
+                    swal('生成成功')
                 } else {
                     // 提示删除失败
                     sweetAlert("Oops...", data.msg, "error");

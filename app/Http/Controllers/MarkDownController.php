@@ -6,6 +6,8 @@ namespace App\Http\Controllers;
 use App\Http\Commons\Curl;
 use App\Http\Commons\Response;
 use App\Http\Commons\XToken;
+use App\Organazation;
+use App\Project;
 use App\Relation;
 use App\RepoMap;
 use Illuminate\Support\Facades\Session;
@@ -30,7 +32,7 @@ class MarkDownController extends Controller
 		$project_id = Input::get('pid');*/
 		$user = Session::get('user');
 		$token = Relation::getToken($project_id, $id, Relation::DIR_TYPE_FILE)['token'];
-		$check = RepoMap::checkAuth($user->uid, $project_id);
+		$check = RepoMap::checkAuth(isset($user->uid) ? $user->uid : 0, $project_id);
 		if((empty($id) || empty($project_id) || empty($token)) || empty($check)){
 			return view('errors.mdzz');
 		}
@@ -46,6 +48,7 @@ class MarkDownController extends Controller
 			'time'       => time()
 		]);
 		return view('markdown.edit')->with([
+			'header' => $user,
 			'title'  => $title['name'],
 			'xtoken' => $xtoken['token'],
 			'pubkey' => $xtoken['pubkey']
@@ -110,6 +113,52 @@ class MarkDownController extends Controller
 		return Response::json(2403, $result, "生成请求提交异常");
 	}
 
+	public function read($org, $repo)
+	{
+		$orgInfo = Organazation::getByName($org);
+		if(!isset($orgInfo)){
+			return view('errors.mdzz');
+		}
+		$repoInfo = Project::getRepo(['org_id' => $orgInfo['id'], 'name' => $repo]);
+		if(!isset($repoInfo)){
+			return view('errors.mdzz');
+		}
+		$rela = Relation::getByCond(['out_id' => $repoInfo['id'], 'type' => Relation::DIR_TYPE_REPO]);
+		$list = [];
+		if(isset($rela[0])){
+			$list = $this->_getChild($rela[0]['id']);
+		}
+		$data = [
+			'repo'  => $repo,
+			'org'   => $org,
+			'title' => $repo,
+			'menu'  => $list,
+		];
+		return view('markdown.read');
+	}
+
+	/**
+	 * @param $parent
+	 * @return mixed
+	 */
+	private function _getChild($parent)
+	{
+		$info = Relation::getByCond(['parent' => $parent]);
+		$list = [];
+		foreach($info as $item){
+			if($item['type'] == Relation::DIR_TYPE_FOLDER){
+				$list[] = $this->_getChild($item['id']);
+			} else{
+				$list[] = [
+					'id'    => $item['id'],
+					'name'  => $item['name'],
+					'token' => $item['token']
+				];
+			}
+		}
+		return $list;
+	}
+
 	/**
 	 * Redis 数据落盘
 	 * @param $project_id
@@ -118,7 +167,7 @@ class MarkDownController extends Controller
 	 */
 	private function _redisOp($project_id, $token)
 	{
-		if(!Relation::checkSetStroage($project_id, $token) || !RedisDB::exists(Def::REDIS_MARKDOWN_KEY . $project_id . "_$token")){
+		if(!Relation::checkSetStroage($project_id, $token, Relation::DIR_TYPE_FILE) || !RedisDB::exists(Def::REDIS_MARKDOWN_KEY . $project_id . "_$token")){
 			return FALSE;
 		}
 		$data = RedisDB::get(Def::REDIS_MARKDOWN_KEY . $project_id . "_$token");
@@ -132,5 +181,4 @@ class MarkDownController extends Controller
 		fclose($md);
 		return $res;
 	}
-
 }

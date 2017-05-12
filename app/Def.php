@@ -11,6 +11,8 @@ namespace App;
 
 class Def
 {
+	const DEF_AVATAR = '/avatar/avatar.png';
+
     const REDIS_MARKDOWN_KEY = 'markdown_tiki_file_';   //Markdown Redis Prefix
 
 	const TIKI_API_XAUTH = '5DE0CB6960FDD55B9F7C26E6554617B5';		//接口中间件校验 md5(马越)
@@ -27,6 +29,6 @@ class Def
 
     //Markdown 生成 HTML
     const GENERATE_AUTH_KEY = '7fUJd46QtlmJkBWn';   //校验key
-    const GENERATE_WIKI_URL = 'https://parse.service.tiki.im/parse';
+    const GENERATE_WIKI_URL = 'https://ink.service.tiki.im/parse';
 
 }

@@ -56,7 +56,7 @@
                 </li>
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download">
-                        <img src="https://pbs.twimg.com/profile_images/831518614561837058/ytvJfYOx_400x400.jpg"
+                        <img src="{{$header->avatar}}"
                              class="img-rounded" width="20px" height="20px">
                         <span class="caret"></span>
                     </a>

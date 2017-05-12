@@ -67,7 +67,8 @@ class Relation extends Model
 			'token'  => $token,
 			'type'   => $type
 		];
-		return (bool)$this->where($cond)->first();
+		return $cond;
+		return $this->where($cond)->first();
 	}
 
 	/**

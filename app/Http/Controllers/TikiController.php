@@ -306,6 +306,7 @@ class TikiController extends Controller
 			if(!is_readable($path)){
 				is_file($path) or mkdir($path, 0777);
 				is_file($path) or mkdir($path . Def::MARKDOWN_TYPE_ORIGIN_PATH . "/", 0777);
+				is_file($path) or mkdir($path . Def::MARKDOWN_TYPE_PARSED_PATH . "/", 0777);
 			}
 			$md = fopen($path . Def::MARKDOWN_TYPE_ORIGIN_PATH . "/" . $data['token'], "w+");
 			fclose($md);

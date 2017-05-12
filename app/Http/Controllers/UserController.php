@@ -8,6 +8,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Def;
 use App\NamePool;
 use Mail;
 use Validator;
@@ -119,6 +120,7 @@ class UserController extends Controller
 			//return Response::json(1406, [], 'Auth 用户信息获取失败');
 			return view('login')->with('msg', 'Auth 用户信息获取失败');
 		}
+		$user_info->avatar = Def::DEF_AVATAR;
 		Session::put('user', $user_info);
 		if(Input::get('state') == 2){
 			return redirect('https://pan.tiki.im');
@@ -242,6 +244,7 @@ class UserController extends Controller
 		];
 		UserAttr::saveInfo($data, $user->uid);
 		$user->nickname = $data['nickname'];
+		$user->avatar = Def::DEF_AVATAR;
 		Session::put('user', $user);
 		return redirect()->action('UserController@setting');
 	}

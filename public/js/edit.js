@@ -103,7 +103,7 @@ function JSONToChange(json) {
     if (data['type'] == ACK_MSG) {
         // console.log('ack')
         ver = data.ver
-        ChangesetQueueLock = false // unclock
+        // ChangesetQueueLock = false // unclock
         return
     }
     if (data['type'] == FORCE_SYNC_MSG) {
@@ -142,7 +142,7 @@ function JSONToChange(json) {
         // console.log(e)
         // Empty all
         ChangesetQueue = []
-        ChangesetQueueLock = false // unclock
+        // ChangesetQueueLock = false // unclock
         sendMsg(JSON.stringify({
             'type': ACTIVE_SYNC_MSG,
             'uid': uid
@@ -167,7 +167,7 @@ function sync() {
 }
 // Queue consumer
 var changesetQueueConsumer = setInterval(function() {
-    if (!ChangesetQueueLock) { // get ACK
+    if (true) { // get ACK
         var merged = ChangesetQueue.shift()
         while (ChangesetQueue.length != 0) {
             merged = merged.merge(ChangesetQueue.shift())
@@ -185,7 +185,7 @@ var changesetQueueConsumer = setInterval(function() {
 }, 1000)
 function sendMsg(msg) {
     // console.log("send: " + msg)
-    ChangesetQueueLock = true // lock
+    // ChangesetQueueLock = true // lock
     conn.send(msg)
 }
 function connect(token, pubkey) {
