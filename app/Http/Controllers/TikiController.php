@@ -61,6 +61,7 @@ class TikiController extends Controller
 			$profile['projects'] = Project::getRepo(['org_id' => $profile['id']]);
 		}
 
+
 		$data = [
 			'header'  => $user,
 			'profile' => $profile,

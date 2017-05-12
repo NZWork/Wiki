@@ -74,7 +74,7 @@ class Organazation extends Model
     public static function getDetailByUnique($key, $value)
     {
         if (empty($key) or empty($value) or $key != 'id' and $key != 'name') {
-            return [];
+            return Object();
         }
 
         $org = Organazation::where([$key => $value])->first();
@@ -82,8 +82,12 @@ class Organazation extends Model
             'out_id' => $org['id'],
             'type' => 2,
         ])->first();
-        $detail = array_merge($org, $attr);
-        return $datail;
+
+        $attrKeys = array('nickname', 'bio', 'url', 'company', 'location', 'avatar', 'type');
+        foreach ($attrKeys as $key) {
+            $org->$key = $attr->$key;
+        }
+        return $org;
     }
 
 
