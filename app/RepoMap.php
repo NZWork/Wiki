@@ -24,6 +24,21 @@ class RepoMap extends Model
 	}
 
 	/**
+	 * 获取项目成员
+	 * @param $repo_id
+	 * @return array
+	 */
+	protected function getUserList($repo_id)
+	{
+		$repo_id = intval($repo_id);
+		if(empty($repo_id)){
+			return [];
+		}
+		$cond = ['repo_id' => $repo_id];
+		return $this->where($cond)->orderBy('id', 'asc')->get();
+	}
+
+	/**
 	 * 添加关系
 	 * @param array $data
 	 * @return array

@@ -329,9 +329,9 @@ class TikiController extends Controller
 				return Response::json(400, [], '权限不足');
 			}
 			$this->_del($id);
-			return Response::json(200,[],'删除成功');
+			return Response::json(200, [], '删除成功');
 		}
-		return Response::json(200,[],'异常操作');
+		return Response::json(200, [], '异常操作');
 	}
 
 	private function _del($id)
@@ -384,6 +384,15 @@ class TikiController extends Controller
 	public function projectSetting()
 	{
 		$user = Session::get('user');
+		$repo_id = Input::get('id');
+		$info = Project::getById($repo_id);
+		if(!RepoMap::checkAuth($user->uid, $repo_id)){
+			return view('errors.404');
+		}
+		$userList = RepoMap::getUserList($repo_id);
+		foreach($userList as $user){
+			
+		}
 		$data = [
 			'header'    => $user,
 			'form_data' => [
