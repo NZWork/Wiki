@@ -393,6 +393,7 @@ class TikiController extends Controller
 		foreach($userList as $item){
 			$temp = User::getUserById($item['uid']);
 			$users[] = [
+				'id'    => $item['id'],
 				'uid'   => $temp['id'],
 				'name'  => $temp['name'],
 				'email' => $temp['email']
@@ -404,7 +405,8 @@ class TikiController extends Controller
 			'header'      => $user,
 			'users'       => $users,
 			'title'       => $title,
-			'description' => $info['description']
+			'description' => $info['description'],
+			'repo_id'     => $repo_id
 		];
 		return view('tiki.projectSetting')->with($data);
 	}
@@ -414,7 +416,37 @@ class TikiController extends Controller
 	 */
 	public function repoSetting()
 	{
-
+		$user = Session::get('user');
+		$id = Input::get('id');
+		$description = Input::get('description');
+		$auth = RepoMap::checkAuth($user->uid, $id);
+		if(!$auth){
+			return Response::json(400, [], '权限不足');
+		}
+		$res = Project::updateRepo([
+			'description' => $description
+		], $id);
+		if($res){
+			return Response::json(200, [], '更新成功');
+		}
+		return Response::json(400, [], '更新失败');
 	}
 
+	/**
+	 * 移除用户
+	 */
+	public function delRepoMapByUser()
+	{
+		$id = Input::get('id');
+		$repo_id = Input::get('repo_id');
+		$user = Session::get('user');
+		$auth = RepoMap::checkAuth($user->uid, $repo_id);
+		if(!$auth){
+			return Response::json(400, [], '权限不足');
+		}
+		if(RepoMap::delMap($id)){
+			return Response::json(200, [], '移除成功');
+		}
+		return Response::json(400, [], '操作异常');
+	}
 }
