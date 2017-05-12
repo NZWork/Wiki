@@ -86,7 +86,7 @@ class TikiController extends Controller
 				'org_id'   => $org['org_id'],
 				'org_name' => Organazation::getNameById($org['org_id'])
 			];
-		}
+        }
 		$data = [
 			'orgList' => $orgList,
 			'header'  => $user
