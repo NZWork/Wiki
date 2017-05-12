@@ -25,7 +25,7 @@
             @endif
             <div class="pull-right">
                 @if(count($path) > 2)
-                <a href="/generate?pid={{ $obId }}" class="btn btn-sm btn-default">生成 Wiki</a>
+                <button type="button" class="btn btn-sm btn-default" id="genPro">生成 Wiki</button>
                 @endif
                 @if(count($path) > 1)
                 @if(count($path) == 2)
@@ -125,8 +125,7 @@
                             swal('创建成功')
                             setTimeout("location.reload()", 500);
                         } else {
-                            // 提示删除失败
-                            swal.showInputError(data.msg)
+                            sweetAlert("Oops...", data.msg, "error");
                         }
                     },
                     error: function() {
@@ -160,7 +159,7 @@
                         setTimeout("location.reload()", 500);
                     } else {
                         // 提示删除失败
-                        swal.showInputError(data.msg)
+                        sweetAlert("Oops...", data.msg, "error");
                     }
                 },
                 error: function() {
@@ -169,4 +168,26 @@
             });
         });
     }
+
+    $('#genPro').on('click', function(){
+        $.ajax({
+            type: "POST",
+            url: "/generate",
+            data: {
+                'pid': {{ $obId }},
+            },
+            cache: false,
+            success: function(data) {
+                if (data.code == 2203) {
+                    swal('删除成功')
+                } else {
+                    // 提示删除失败
+                    sweetAlert("Oops...", data.msg, "error");
+                }
+            },
+            error: function() {
+                swal.showInputError('网络异常')
+            }
+        });
+    })
 </script>
