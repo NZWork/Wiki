@@ -417,7 +417,7 @@ class TikiController extends Controller
 	public function repoSetting()
 	{
 		$user = Session::get('user');
-		$id = Input::get('id');
+		$id = Input::get('repo_id');
 		$description = Input::get('description');
 		$auth = RepoMap::checkAuth($user->uid, $id);
 		if(!$auth){
