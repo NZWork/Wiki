@@ -15,8 +15,8 @@
         <div class="col-xs-12 col-sm-3 col-sm-offset-3">
             @if(count($path)  > 2)
             <div class="btn-group">
-                <a href="#" class="btn btn-sm btn-info">新建</a>
-                <a href="#" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></a>
+                <a href="#" class="btn btn-sm btn-default">新建</a>
+                <a href="#" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <li><a onclick="newDirOrFile(true)">文档</a></li>
                     <li><a onclick="newDirOrFile(false)">目录</a></li>
