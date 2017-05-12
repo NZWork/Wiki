@@ -51,6 +51,7 @@ Route::group(['middleware' => ['web', 'login']], function () {
 	Route::get('/center', 'TikiController@index');
 	Route::get('/open', 'TikiController@openDir');
 	Route::post('/newFile', 'TikiController@newFile');
+	Route::post('/deleteFile', 'TikiController@delFile');
 
 
 	Route::get('/setting', 'UserController@setting');

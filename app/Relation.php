@@ -147,11 +147,29 @@ class Relation extends Model
 		return $this->where($cond)->get();
 	}
 
+	/**
+	 * @param array $cond
+	 * @return array
+	 */
 	protected function getByCond($cond = [])
 	{
 		if(empty($cond)){
 			return [];
 		}
 		return $this->where($cond)->get();
+	}
+
+	/**
+	 * @param $id
+	 * @return array
+	 */
+	protected function delById($id)
+	{
+		$id = intval($id);
+		if(empty($id)){
+			return [];
+		}
+		$cond = ['id' => $id];
+		return $this->where($cond)->delete();
 	}
 }

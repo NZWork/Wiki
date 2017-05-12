@@ -315,6 +315,42 @@ class TikiController extends Controller
 	}
 
 	/**
+	 * 删除文件
+	 * @return \Illuminate\Http\JsonResponse
+	 */
+	public function delFile()
+	{
+		$user = Session::get('user');
+		$id = Input::get('id');
+		$rela = Relation::getById($id);
+		if($rela && $rela['type'] < Relation::DIR_TYPE_REPO){
+			$auth = RepoMap::checkAuth($user->uid, $rela['out_id']);
+			if(empty($auth)){
+				return Response::json(400, [], '权限不足');
+			}
+			$this->_del($id);
+			return Response::json(200,[],'删除成功');
+		}
+		return Response::json(200,[],'异常操作');
+	}
+
+	private function _del($id)
+	{
+		$rela = Relation::getById($id);
+		if($rela['type'] == Relation::DIR_TYPE_FOLDER){
+			$list = Relation::getChild($id);
+			foreach($list as $item){
+				$this->_del($item['id']);
+			}
+		} elseif($rela['type'] == Relation::DIR_TYPE_FILE){
+			$path = Def::MARKDOWN_ROOT_PATH . "/" . $rela['out_id'] . "/" .
+				Def::MARKDOWN_TYPE_ORIGIN_PATH . "/" . $rela['token'];
+			unlink($path);
+		}
+		return Relation::delById($id);
+	}
+
+	/**
 	 * 项目展示
 	 * @return $this
 	 */
