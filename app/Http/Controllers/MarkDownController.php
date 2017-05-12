@@ -30,7 +30,7 @@ class MarkDownController extends Controller
 		$project_id = Input::get('pid');*/
 		$user = Session::get('user');
 		$token = Relation::getToken($project_id, $id, Relation::DIR_TYPE_FILE)['token'];
-		$check = RepoMap::checkEdit($user->uid, $project_id);
+		$check = RepoMap::checkAuth($user->uid, $project_id);
 		if((empty($id) || empty($project_id) || empty($token)) || empty($check)){
 			return view('errors.mdzz');
 		}

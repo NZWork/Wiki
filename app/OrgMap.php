@@ -36,4 +36,25 @@ class OrgMap extends Model
 		return $this->insert($data);
 	}
 
+	/**
+	 * 权限验证
+	 * @param $uid
+	 * @param $org_id
+	 * @return array
+	 */
+	protected function checkAuth($uid, $org_id)
+	{
+		$uid = intval($uid);
+		$org_id = intval($org_id);
+		if(empty($uid) || empty($org_id)){
+			return [];
+		}
+		$cond = [
+			'uid'     => $uid,
+			'org_id' => $org_id
+		];
+		return $this->where($cond)->first();
+	}
+
+
 }

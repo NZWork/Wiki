@@ -42,7 +42,7 @@ class RepoMap extends Model
 	 * @param $repo_id
 	 * @return array
 	 */
-	protected function checkEdit($uid, $repo_id)
+	protected function checkAuth($uid, $repo_id)
 	{
 		$uid = intval($uid);
 		$repo_id = intval($repo_id);

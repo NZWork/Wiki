@@ -17,7 +17,23 @@ class Relation extends Model
 	const DIR_TYPE_FOLDER = 2;
 	const DIR_TYPE_REPO = 3;
 	const DIR_TYPE_ORG = 4;
+
 	//protected $table = '';
+
+	/**
+	 * 根据Id获取目录
+	 * @param int $id
+	 * @return array
+	 */
+	protected function getById($id = 0)
+	{
+		$id = intval($id);
+		if(empty($id)){
+			return [];
+		}
+		$cond = ['id' => $id];
+		return $this->where($cond)->first();
+	}
 
 	/**
 	 * 获取markdown文件信息
@@ -87,6 +103,12 @@ class Relation extends Model
 		return $this->insertGetId($data);
 	}
 
+	/**
+	 * 获取id
+	 * @param int $out_id
+	 * @param int $type
+	 * @return mixed
+	 */
 	protected function getId($out_id = 0, $type = self::DIR_TYPE_ORG)
 	{
 		$cond = [
@@ -94,5 +116,34 @@ class Relation extends Model
 			'type'   => $type
 		];
 		return $this->where($cond)->first();
+	}
+
+	/**
+	 * 获取目录名称
+	 * @param int $id
+	 * @return array
+	 */
+	protected function getName($id = 0)
+	{
+		$id = intval($id);
+		if(empty($id)){
+			return [];
+		}
+		$cond = ['id' => $id];
+		return $this->where($cond)->value('name');
+	}
+
+	/**
+	 * 获取孩子们
+	 * @param int $parent
+	 * @return array
+	 */
+	protected function getChild($parent = 0)
+	{
+		if(!$parent){
+			return [];
+		}
+		$cond = ['parent' => $parent];
+		return $this->where($cond)->get();
 	}
 }

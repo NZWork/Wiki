@@ -24,59 +24,126 @@ use Illuminate\Support\Facades\Session;
 class TikiController extends Controller
 {
 
-    /**
-     * 用户主页
-     * @return $this
-     */
-    public function profile()
-    {
-        $profileID = $name;
+	/**
+	 * 用户主页
+	 * @return $this
+	 */
+	public function profile($name)
+	{
+		$profileID = $name;
 
-        $user = Session::get('user');
-        $profile = json_decode(json_encode($user), true);
-        $isUserProfile = true;
+		$user = Session::get('user');
+		$profile = json_decode(json_encode($user), TRUE);
+		$isUserProfile = TRUE;
 
-        if ($user != null or $user->name != $profileID) { // is not current login user
-            $profile = User::getUserByName($profileID);
-            if (count($profile) == 0) { // maybe organazation
-                $isUserProfile = false;
-                $profile == Organazation::getDetailByUnique('name', $profileID);
-            }
-        }
+		if($user != NULL or $user->name != $profileID){ // is not current login user
+			$profile = User::getUserByName($profileID);
+			if(count($profile) == 0){ // maybe organazation
+				$isUserProfile = FALSE;
+				$profile == Organazation::getDetailByUnique('name', $profileID);
+			}
+		}
 
-        if (count($profile) == 0) { // user not found
-            return view('errors.404')->withHeader($user);
-        }
+		if(count($profile) == 0){ // user not found
+			return view('errors.404')->withHeader($user);
+		}
 
-        if (isUserProfile) {
-            $profile['organazations'] = array();
+		if($isUserProfile){
+			$profile['organazations'] = array();
 
-            $orgIDList = OrgMap::getOrgList($profile['id']);
-            foreach($orgIDList as $org) {
-                $profile['organazations'][] = Organazation::getDetailByUnique('id', $org['id']);
-            }
+			$orgIDList = OrgMap::getOrgList($profile['id']);
+			foreach($orgIDList as $org){
+				$profile['organazations'][] = Organazation::getDetailByUnique('id', $org['id']);
+			}
 
-            $profile['projects'] = Project::getRepo(['create_uid' => $profile['id']]);
-        } else {
-            $profile['projects'] = Project::getRepo(['org_id' => $profile['id']]);
-        }
+			$profile['projects'] = Project::getRepo(['create_uid' => $profile['id']]);
+		} else{
+			$profile['projects'] = Project::getRepo(['org_id' => $profile['id']]);
+		}
 
+		$data = [
+			'header'  => $user,
+			'profile' => $profile,
+			'isUser'  => $isUserProfile,
+		];
+		return view('tiki.profile')->with($data);
+	}
 
-        $data = [
-            'header'    => $user,
-            'profile'   => $profile,
-            'isUser'    => $isUserProfile,
-        ];
-        return view('tiki.profile')->with($data);
-    }
-
+	/**
+	 * center
+	 * @return $this
+	 */
 	public function index()
 	{
 		$user = Session::get('user');
+		$dir_id = Session::get('dir_id');
+		$path = Session::get('path');
+		if(empty($path)){
+			$path = [['dir_id' => 0, 'name' => '仪表盘']];
+			Session::put($path);
+		}
+		$dir = [];
+		if(empty($dir_id)){    //根目录为组织
+			$list = OrgMap::getOrgList($user->uid);
+			foreach($list as $org){
+				$rela = Relation::getId($org['org_id'], Relation::DIR_TYPE_ORG);
+				if($rela){
+					$dir[] = [
+						'id'     => $rela['id'],
+						'out_id' => $rela['out_id'],
+						'name'   => $rela['name'],
+						'type'   => $rela['type'],
+						'token'  => $rela['token']
+					];
+				}
+			}
+		} else{    //根据dir_id获取目录下文件
+			$list = Relation::getChild($dir_id);
+			foreach($list as $rela){
+				if($rela){
+					$dir[] = [
+						'id'     => $rela['id'],
+						'out_id' => $rela['out_id'],
+						'name'   => $rela['name'],
+						'type'   => $rela['type'],
+						'token'  => $rela['token']
+					];
+				}
+			}
+		}
 		$data = [
 			'header' => Session::get('user'),
+			'dir'    => $dir,
+			'path'   => $path,
 		];
 		return view('tiki.index')->with($data);
+	}
+
+	/**
+	 * 打开目录
+	 * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
+	 */
+	public function openDir()
+	{
+		$dir_id = intval(Input::get('dir_id'));
+		$user = Session::get('user');
+		$rela = Relation::getById($dir_id);
+		if($rela['type'] == Relation::DIR_TYPE_ORG){
+			$res = OrgMap::checkAuth($user->uid, $rela['out_id']);
+		} else{
+			$res = RepoMap::checkAuth($user->uid, $rela['out_id']);
+		}
+		if($rela){
+			$path = Session::get('path');
+			$path[] = [
+				'dir_id' => $dir_id,
+				'name'   => Relation::getName($dir_id)
+			];
+			Session::put('path', $path);
+			Session::put('dir_id', $dir_id);
+			return redirect('/center');
+		}
+		return view('errors.404');
 	}
 
 	/**
@@ -237,6 +304,6 @@ class TikiController extends Controller
 	public function repoSetting()
 	{
 
-    }
+	}
 
 }

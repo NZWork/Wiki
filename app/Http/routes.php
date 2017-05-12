@@ -68,8 +68,8 @@ Route::group(['middleware' => ['web', 'login']], function () {
     Route::get('/edit/{pid?}/{id?}', 'MarkDownController@getStroageFile');
 
 
-    Route::get('/{name}', 'TikiController@profile');
-    Route::get('/{name}/{project}', 'TikiController@read');
+    Route::get('/{name?}', 'TikiController@profile');
+    Route::get('/{name?}/{project?}', 'TikiController@read');
 });
 
 /**
