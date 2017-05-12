@@ -89,6 +89,4 @@ class Organazation extends Model
         }
         return $org;
     }
-
-
 }
