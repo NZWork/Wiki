@@ -69,6 +69,22 @@ class Organazation extends Model
 		}
 		$cond = ['id' => $id];
 		return $this->where($cond)->value('name');
-	}
+    }
+
+    public static function getDetailByUnique($key, $value)
+    {
+        if (empty($key) or empty($value) or $key != 'id' and $key != 'name') {
+            return [];
+        }
+
+        $org = Organazation::where([$key => $value])->first();
+        $attr = UserAttr::where([
+            'out_id' => $org['id'],
+            'type' => 2,
+        ])->first();
+        $detail = array_merge($org, $attr);
+        return $datail;
+    }
+
 
 }

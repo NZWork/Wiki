@@ -49,7 +49,15 @@ class User extends Authenticatable
 			return [];
 		}
 		return User::where(['id' => $id])->first();
-	}
+    }
+
+    public static function getUserByName($name)
+    {
+        if (empty($name)) {
+            return array();
+        }
+        return User::where(['name' => $name])->first();
+    }
 
 	/**
 	 * 账号校验

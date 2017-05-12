@@ -27,6 +27,6 @@ class Project extends Model
 			return [];
 		}
 		return $this->insertGetId($data);
-	}
+    }
 
 }
