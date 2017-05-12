@@ -13,7 +13,7 @@
             </h3>
             <p class="text-muted">{{ $data['updated_at'] }}</p>
             <div class="jumbotron">
-                <p><a class="btn btn-success btn-md w-lg pull-right">立即阅读</a></p>
+                <p><a class="btn btn-success btn-md w-lg pull-right" href="/{{ $data['org'] }}/{{ $data['name'] }}">立即阅读</a></p>
                 <h1>{{ $data['name'] }}</h1>
                 <p>{{ $data['description'] }}</p>
             </div>
