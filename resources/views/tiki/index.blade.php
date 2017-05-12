@@ -33,13 +33,23 @@
         @foreach($dir as $file)
         @if($file['type'] == 1)
         <!-- 文档 -->
-        <a class="file-list" href="/edit/{{ $file['id'] }}/{{ $file['out_id'] }}" data-type="{{ $file['type'] }}">
-            <img src="https://pbs.twimg.com/profile_images/831518614561837058/ytvJfYOx_400x400.jpg" width="64px">
+        <a class="file-list" target="_blank" href="/edit/{{ $file['id'] }}/{{ $file['out_id'] }}">
+            <svg class="icon" aria-hidden="true" style="width: 64px">
+              <use xlink:href="#icon-wenjian"></use>
+            </svg>
             <p class="text-center">{{ $file['name'] }}</p>
         </a>
         @else
-        <a class="file-list" href="/open?dir_id={{ $file['id'] }}" data-type="{{ $file['type'] }}">
-            <img src="https://pbs.twimg.com/profile_images/831518614561837058/ytvJfYOx_400x400.jpg" width="64px">
+        <a class="file-list" href="/open?dir_id={{ $file['id'] }}">
+            <svg class="icon" aria-hidden="true" style="width: 64px">
+                @if($file['type'] == 2)
+                <use xlink:href="#icon-wenjianjia"></use>
+                @elseif($file['type'] == 3)
+                <use xlink:href="#icon-project"></use>
+                @elseif($file['type'] == 4)
+                <use xlink:href="#icon-zuzhi_hover"></use>
+                @endif
+            </svg>
             <p class="text-center">{{ $file['name'] }}</p>
         </a>
         @endif

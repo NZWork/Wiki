@@ -25,6 +25,9 @@
     <link rel="stylesheet" href="/editormd/css/editormd.min.css"/>
 
     <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="/css/iconfont.css">
+    <script src="/js/iconfont.js">
+
 </head>
 
 <body>
