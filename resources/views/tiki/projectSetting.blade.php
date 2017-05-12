@@ -13,7 +13,7 @@
                     <input type="text" class="form-control" id="project-description" name="description" value="{{ $description }}">
                 </div>
                 <div class="col-xs-12 col-sm-1">
-                    <button id="update-des" class="btn btn-success pull-right" style="margin-top: 25px">保存</button>
+                    <button id="update-des" type="button" class="btn btn-success pull-right" style="margin-top: 25px">保存</button>
                 </div>
             </div>
             <div class="clearfix"></div>
@@ -31,13 +31,13 @@
                     <input type="text" class="form-control" id="project-co">
                 </div>
                 <div class="col-xs-12 col-sm-1">
-                    <button id="add-co" class="btn btn-info pull-right" style="margin-top: 25px">添加</button>
+                    <button id="add-co" type="button"  class="btn btn-info pull-right" style="margin-top: 25px">添加</button>
                 </div>
             </div>
             <div class="col-xs-12 m-t-20" style="margin-bottom: 100px">
                 <h4>移除该项目</h4>
                 <div class="alert alert-warning" role="alert">一旦删除该项目，数据将不可恢复。</div>
-                <button class="btn btn-danger btn-md pull-right" id="delete-project">移除</button>
+                <button class="btn btn-danger btn-md pull-right" type="button"  id="delete-project">移除</button>
             </div>
         </div>
     </div>
