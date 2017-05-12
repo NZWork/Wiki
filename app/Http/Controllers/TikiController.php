@@ -113,10 +113,12 @@ class TikiController extends Controller
 				}
 			}
 		}
+		$rela = Relation::getById($dir_id);
 		$data = [
 			'header' => Session::get('user'),
 			'dir'    => $dir,
 			'path'   => $path,
+			'obId'   => isset($rela['out_id']) ? $rela['out_id'] : 0
 		];
 		return view('tiki.index')->with($data);
 	}
@@ -444,14 +446,25 @@ class TikiController extends Controller
 		if(!$auth){
 			return Response::json(400, [], '权限不足');
 		}
-		if(RepoMap::delMap($id)){
-			return Response::json(200, [], '移除成功');
+		$rela = Project::getById($repo_id);
+		$repoMap = RepoMap::getById($id);
+		if($rela['create_uid'] == $repoMap['uid']){
+			return Response::json(400, [], '创建者无法被移除');
+		}
+		if($rela){
+			if(RepoMap::delMap($id)){
+				return Response::json(200, [], '移除成功');
+			}
 		}
 		return Response::json(400, [], '操作异常');
 	}
 
+	/**
+	 * 项目成员添加
+	 */
 	public function addRepoUser()
 	{
-		
+		$repo_id = Input::get('repo_id');
+
 	}
 }
