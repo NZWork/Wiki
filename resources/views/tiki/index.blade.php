@@ -30,16 +30,16 @@
                 @if(count($path) > 1)
                 @if(count($path) == 2)
                 <!-- 组织 -->
-                <a href="/orgSetting" class="btn btn-sm btn-default">设置</a>
+                <a href="/orgSetting/{{ $obId }}" class="btn btn-sm btn-default">设置</a>
                 <!-- 项目 -->
                 @elseif(count($path) > 2)
-                <a href="/projectSetting" class="btn btn-sm btn-default">设置</a>
+                <a href="/projectSetting/{{ $obId }}" class="btn btn-sm btn-default">设置</a>
                 @endif
                 @endif
             </div>
         </div>
     </div>
-    <div class="row m-t-30">
+    <div class="row">
         @foreach($dir as $file)
         @if($file['type'] == 1)
         <!-- 文档 -->
@@ -63,7 +63,7 @@
                     <use xlink:href="#icon-shanchudelete31"></use>
                 </svg>
             </div>
-            <a target="_blank" href="/open?dir_id={{ $file['id'] }}">
+            <a href="/open?dir_id={{ $file['id'] }}">
                 <svg class="icon" aria-hidden="true" style="width: 48px; height: 48px;">
                   <use xlink:href="#icon-wenjianjia"></use>
                 </svg>

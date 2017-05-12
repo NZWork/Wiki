@@ -67,7 +67,7 @@
                     swal('删除成功')
                     setTimeout("location.reload()", 500);
                 } else {
-                    swal.showInputError(data.msg)
+                    sweetAlert("Oops...", data.msg, "error");
                 }
             },
             error: function() {
@@ -89,7 +89,7 @@
                 if (data.code == 200) {
                     swal('更新成功')
                 } else {
-                    swal.showInputError(data.msg)
+                    sweetAlert("Oops...", data.msg, "error");
                 }
             },
             error: function() {
@@ -113,7 +113,7 @@
                     setTimeout("location.reload()", 500);
                 } else {
                     // 提示删除失败
-                    swal.showInputError(data.msg)
+                    sweetAlert("Oops...", data.msg, "error");
                 }
             },
             error: function() {
@@ -137,7 +137,7 @@
                     setTimeout("location.reload()", 500);
                 } else {
                     // 提示删除失败
-                    swal.showInputError(data.msg)
+                    sweetAlert("Oops...", data.msg, "error");
                 }
             },
             error: function() {
