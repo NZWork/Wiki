@@ -50,7 +50,7 @@ Route::group(['middleware' => ['web', 'login']], function () {
 	Route::get('/logout', 'UserController@logout');
 	Route::get('/center', 'TikiController@index');
 	Route::get('/open', 'TikiController@openDir');
-	Route::get('/newFile', 'TikiController@newFile');
+	Route::post('/newFile', 'TikiController@newFile');
 
 
 	Route::get('/setting', 'UserController@setting');

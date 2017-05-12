@@ -9,6 +9,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Def;
 use App\Http\Commons\Response;
 use App\User;
 use App\Http\Commons\XToken;
@@ -147,8 +148,8 @@ class TikiController extends Controller
 				];
 				$dir = Relation::getById($dir['parent']);
 			}
-			if(isset($rela)){
-				$path[] = ['dir_id' => $dir_id, 'name' => $rela['name']];
+			if(isset($dir['id'])){
+				$path[] = ['dir_id' => $dir['id'], 'name' => $dir['name']];
 			}
 			$path[] = ['dir_id' => 0, 'name' => '仪表盘'];
 			$temp = [];
@@ -285,8 +286,8 @@ class TikiController extends Controller
 		$parent = Session::get('dir_id');
 		$type = Input::get('type');
 		$cond = ['parent' => $parent, 'name' => $name];
-		$res = Project::getRepo($cond);
-		if($res){
+		$res = Relation::getByCond($cond);
+		if(isset($res[0])){
 			return Response::json(400, [], '名称已被使用');
 		}
 		$rela = Relation::getById($parent);
@@ -299,6 +300,13 @@ class TikiController extends Controller
 		if($type == 1){
 			$data['token'] = XToken::uuid();
 			$type = Relation::DIR_TYPE_FILE;
+			$path = Def::MARKDOWN_ROOT_PATH . "/" . $data['out_id'] . "/";
+			if(!is_readable($path)){
+				is_file($path) or mkdir($path, 0777);
+				is_file($path) or mkdir($path . Def::MARKDOWN_TYPE_ORIGIN_PATH . "/", 0777);
+			}
+			$md = fopen($path . Def::MARKDOWN_TYPE_ORIGIN_PATH . "/" . $data['token'], "w+");
+			fclose($md);
 		} else{
 			$type = Relation::DIR_TYPE_FOLDER;
 		}

@@ -146,4 +146,12 @@ class Relation extends Model
 		$cond = ['parent' => $parent];
 		return $this->where($cond)->get();
 	}
+
+	protected function getByCond($cond = [])
+	{
+		if(empty($cond)){
+			return [];
+		}
+		return $this->where($cond)->get();
+	}
 }

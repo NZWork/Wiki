@@ -13,7 +13,7 @@
             </ol>
         </div>
         <div class="col-xs-12 col-sm-3 col-sm-offset-3">
-            @if(count($path) == 1)
+            @if(count($path)  > 2)
             <div class="btn-group">
                 <a href="#" class="btn btn-sm btn-info">新建</a>
                 <a href="#" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></a>
