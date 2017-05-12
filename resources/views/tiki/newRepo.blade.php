@@ -12,6 +12,7 @@
                     <div class="col-xs-3">
                         <label for="product-owner">所有者</label>
                         <select class="selectpicker" data-style="btn-primary" id="product-owner" name="org_id">
+                            <option value="0">{{ $header->name }}</option>
              @foreach ($orgList as $org)
                             <option value="{{ $org->org_id }}">{{ $org->org_name }}</option>
              @endforeach
