@@ -81,6 +81,7 @@
             type: "POST",
             url: "/repoSetting",
             data: {
+                'repo_id': {{ $repo_id }},
                 'description': $('#project-description').val(),
             },
             cache: false,
@@ -102,6 +103,7 @@
             type: "POST",
             url: "/delRepo",
             data: {
+                'repo_id': {{ $repo_id }},
                 'id': {{ $repo_id }},
             },
             cache: false,
@@ -125,6 +127,7 @@
             type: "POST",
             url: "/addRepoUser",
             data: {
+                'repo_id': {{ $repo_id }},
                 'name': $('#project-co').val(),
             },
             cache: false,
