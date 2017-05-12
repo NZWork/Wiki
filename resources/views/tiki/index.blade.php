@@ -50,7 +50,7 @@
                     <use xlink:href="#icon-shanchudelete31"></use>
                 </svg>
             </div>
-            <a target="_blank" href="/edit/{{ $file['out_id'] }}/{{ $file['id'] }}">
+            <a target="_blank" href="/edit/{{ $file['id'] }}/{{ $file['out_id'] }}">
                 <svg class="icon" aria-hidden="true" style="width: 48px; height: 48px;">
                   <use xlink:href="#icon-wenjian"></use>
                 </svg>
