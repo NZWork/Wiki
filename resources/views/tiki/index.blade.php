@@ -39,7 +39,7 @@
             </div>
         </div>
     </div>
-    <div class="row m-t-30">
+    <div class="row">
         @foreach($dir as $file)
         @if($file['type'] == 1)
         <!-- 文档 -->
