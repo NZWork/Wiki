@@ -66,6 +66,8 @@ class TikiController extends Controller
 				UserAttr::addAttr($data, NamePool::NAME_ORG_TYPE);
 				//维护组织用户关系表
 				OrgMap::addMap(['org_id' => $res->id, 'uid' => $user->uid]);
+				//目录关系表
+
 				return redirect('/center');
 			}
 		}
