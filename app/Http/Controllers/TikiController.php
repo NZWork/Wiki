@@ -49,16 +49,16 @@ class TikiController extends Controller
         }
 
         if ($isUserProfile) {
-            $profile['organazations'] = array();
+            $profile->organazations = array();
 
-            $orgIDList = OrgMap::getOrgList($profile['id']);
+            $orgIDList = OrgMap::getOrgList($profile->id);
             foreach($orgIDList as $org) {
-                $profile['organazations'][] = Organazation::getDetailByUnique('id', $org['id']);
+                $profile->organazations[] = Organazation::getDetailByUnique('id', $org->id);
             }
 
-            $profile['projects'] = Project::getRepo(['create_uid' => $profile['id']]);
+            $profile->projects = Project::getRepo(['create_uid' => $profile->id]);
         } else {
-            $profile['projects'] = Project::getRepo(['org_id' => $profile['id']]);
+            $profile->projects = Project::getRepo(['org_id' => $profile->id]);
         }
 
 
