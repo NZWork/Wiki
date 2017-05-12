@@ -213,7 +213,8 @@ body {
 
 .file-list:hover {
     color: #bdc5c7;
-    text-decoration: none
+    text-decoration: none;
+    display: block;
 }
 
 .file-list img {
@@ -226,10 +227,6 @@ body {
 
 .file-list .delete {
     display: none;
-}
-
-.file-list .delete:hover {
-    display: block;
 }
 
 .file-list p {
