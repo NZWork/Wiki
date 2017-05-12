@@ -112,7 +112,10 @@ class TikiController extends Controller
 		$org_id = intval(Input::get('org_id'));
 		$name = Input::get('name');
 		$user = Session::get('user');
-		$cond = $org_id ? ['org_id' => $org_id] : ['org_id' => 0, 'create_uid' => $user->uid];
+		$cond = ['org_id' => $org_id, 'name' => $name];
+		if($org_id == 0){
+			$cond['create_uid'] = $user->uid;
+		}
 		$res = Project::getRepo($cond);
 		if(empty($res)){
 			$data = [
@@ -137,6 +140,14 @@ class TikiController extends Controller
 			return redirect('/center');
 		}
 		return back()->withInput()->withErrors(['组织（或个人）下项目名已被使用']);
+	}
+
+	public function newFolder()
+	{
+		$user = Session::get('user');
+		$id = Input::get('id');
+		$name = Input::get('name');
+
 	}
 
 	/**
