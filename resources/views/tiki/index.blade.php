@@ -12,7 +12,7 @@
                @endforeach
             </ol>
         </div>
-        <div class="col-xs-12 col-sm-4 col-sm-offset-3">
+        <div class="col-xs-12 col-sm-4 col-sm-offset-2">
             @if(count($path)  > 2)
             <div class="btn-group">
                 <a href="#" class="btn btn-sm btn-default">新建</a>
