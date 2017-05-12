@@ -24,8 +24,18 @@
             </div>
             @endif
             <div class="pull-right">
+                @if(count($path) > 2)
                 <a href="#" class="btn btn-sm btn-default">生成 Wiki</a>
-                <a href="#" class="btn btn-sm btn-default">设置</a>
+                @endif
+                @if(count($path) > 1)
+                @if(count($path) == 2)
+                <!-- 组织 -->
+                <a href="/orgSetting" class="btn btn-sm btn-default">设置</a>
+                <!-- 项目 -->
+                @elseif(count($path) > 2)
+                <a href="/projectSetting" class="btn btn-sm btn-default">设置</a>
+                @endif
+                @endif
             </div>
         </div>
     </div>
