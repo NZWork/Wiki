@@ -224,6 +224,14 @@ body {
     width: 60px;
 }
 
+.file-list .delete {
+    display: none;
+}
+
+.file-list .delete:hover {
+    display: block;
+}
+
 .file-list p {
     margin-top: 5px;
     font-size: 12px

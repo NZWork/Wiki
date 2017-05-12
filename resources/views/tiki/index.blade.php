@@ -15,8 +15,8 @@
         <div class="col-xs-12 col-sm-3 col-sm-offset-3">
             @if(count($path)  > 2)
             <div class="btn-group">
-                <a href="#" class="btn btn-sm btn-info">新建</a>
-                <a href="#" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></a>
+                <a href="#" class="btn btn-sm btn-default">新建</a>
+                <a href="#" class="btn btn-sm btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <li><a onclick="newDirOrFile(true)">文档</a></li>
                     <li><a onclick="newDirOrFile(false)">目录</a></li>
@@ -34,22 +34,36 @@
         @if($file['type'] == 1)
         <!-- 文档 -->
         <div class="file-list">
-            <svg class="icon" aria-hidden="true" style="width: 64px" onclick="deleteFile('{{ $file['id'] }}')">
-                <use xlink:href="#icon-shanchudelete31"></use>
-            </svg>
+            <div class="delete">
+                <svg class="icon pull-right" aria-hidden="true" onclick="deleteFile('{{ $file['id'] }}')">
+                    <use xlink:href="#icon-shanchudelete31"></use>
+                </svg>
+            </div>
             <a target="_blank" href="/edit/{{ $file['out_id'] }}/{{ $file['id'] }}">
-                <svg class="icon" aria-hidden="true" style="width: 64px">
+                <svg class="icon" aria-hidden="true" style="width: 48px; height: 48px;">
                   <use xlink:href="#icon-wenjian"></use>
+                </svg>
+                <p class="text-center">{{ $file['name'] }}</p>
+            </a>
+        </div>
+        @elseif($file['type'] == 2)
+        <div class="file-list">
+            <div class="delete">
+                <svg class="icon pull-right" aria-hidden="true" onclick="deleteFile('{{ $file['id'] }}')">
+                    <use xlink:href="#icon-shanchudelete31"></use>
+                </svg>
+            </div>
+            <a target="_blank" href="/open?dir_id={{ $file['id'] }}">
+                <svg class="icon" aria-hidden="true" style="width: 48px; height: 48px;">
+                  <use xlink:href="#icon-wenjianjia"></use>
                 </svg>
                 <p class="text-center">{{ $file['name'] }}</p>
             </a>
         </div>
         @else
         <a class="file-list" href="/open?dir_id={{ $file['id'] }}">
-            <svg class="icon" aria-hidden="true" style="width: 64px">
-                @if($file['type'] == 2)
-                <use xlink:href="#icon-wenjianjia"></use>
-                @elseif($file['type'] == 3)
+            <svg class="icon" aria-hidden="true" style="width: 48px; height: 48px;">
+                @if($file['type'] == 3)
                 <use xlink:href="#icon-project"></use>
                 @elseif($file['type'] == 4)
                 <use xlink:href="#icon-zuzhi_hover"></use>
