@@ -48,7 +48,7 @@ class TikiController extends Controller
 		}
 
 		if(count($profile) == 0){ // user not found
-			return view('errors.404')->withHeader($user);
+			return view('errors.mdzz')->withHeader($user);
 		}
 
 		if($isUserProfile){
@@ -356,13 +356,12 @@ class TikiController extends Controller
 	 * 项目展示
 	 * @return $this
 	 */
-	public function project()
+	public function project($repo_id = 0)
 	{
 		$user = Session::get('user');
-		$repo_id = Input::get('id');
 		$res = Project::getById($repo_id);
 		if(empty($res)){
-			return view('errors.404');
+			return view('errors.mdzz');
 		}
 		$org = $res->org_id ? Organazation::getNameById($res->org_id) : $user->name;
 		$data = [
@@ -464,7 +463,32 @@ class TikiController extends Controller
 	 */
 	public function addRepoUser()
 	{
+		$user = Session::get('user');
 		$repo_id = Input::get('repo_id');
-
+		$auth = RepoMap::checkAuth($user->uid, $repo_id);
+		if(!$auth){
+			return Response::json(400, [], '权限不足');
+		}
+		$name = Input::get('name');
+		$info = User::getUserByName($name);
+		if(empty($info)){
+			return Response::json(400, [], '用户不存在');
+		}
+		$repo = Project::getById($repo_id);
+		if(!OrgMap::checkAuth($info['id'], $repo['org_id'])){
+			return Response::json(400, [], '该用户非组织成员');
+		}
+		if(RepoMap::checkAuth($info['id'], $repo_id)){
+			return Response::json(400, [], '该用户权限已存在');
+		}
+		$res = RepoMap::addMap([
+			'repo_id'    => $repo_id,
+			'uid'        => $info['id'],
+			'create_uid' => $user->uid
+		]);
+		if($res){
+			return Response::json(200, [], '用户添加成功');
+		}
+		return Response::json(400, [], '操作失败');
 	}
 }
