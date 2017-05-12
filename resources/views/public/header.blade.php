@@ -64,7 +64,7 @@
                         @if(isset($header))
                             <li><a href=""><b>{{$header->nickname}}</b></a></li>
                             <li class="divider"></li>
-                            <li><a href="/center">个人主页</a></li>
+                            <li><a href="/{{ $header->name }}">个人主页</a></li>
                             <li><a href="/setting">账号设置</a></li>
                             <li><a href="https://pan.tiki.im">网盘</a></li>
                             <li><a href="http://www.baidu.com">帮助</a></li>
