@@ -24,43 +24,42 @@ use Illuminate\Support\Facades\Session;
 class TikiController extends Controller
 {
 
-	/**
-	 * 用户主页
-	 * @return $this
-	 */
-	public function profile($name)
-	{
-		$profileID = $name;
+    /**
+     * 用户主页
+     * @return $this
+     */
+    public function profile()
+    {
+        $profileID = $name;
 
-		$user = Session::get('user');
-		$profile = json_decode(json_encode($user), TRUE);
-		$isUserProfile = TRUE;
+        $user = Session::get('user');
+        $profile = json_decode(json_encode($user), true);
+        $isUserProfile = true;
 
-		if($user != NULL or $user->name != $profileID){ // is not current login user
-			$profile = User::getUserByName($profileID);
-			if(count($profile) == 0){ // maybe organazation
-				$isUserProfile = FALSE;
-				$profile == Organazation::getDetailByUnique('name', $profileID);
-			}
-		}
+        if ($user != null or $user->name != $profileID) { // is not current login user
+            $profile = User::getUserByName($profileID);
+            if (count($profile) == 0) { // maybe organazation
+                $isUserProfile = false;
+                $profile == Organazation::getDetailByUnique('name', $profileID);
+            }
+        }
 
-		if(count($profile) == 0){ // user not found
-			return view('errors.404')->withHeader($user);
-		}
+        if (count($profile) == 0) { // user not found
+            return view('errors.404')->withHeader($user);
+        }
 
-		if($isUserProfile){
-			$profile['organazations'] = array();
+        if ($isUserProfile) {
+            $profile->organazations = array();
 
-			$orgIDList = OrgMap::getOrgList($profile['id']);
-			foreach($orgIDList as $org){
-				$profile['organazations'][] = Organazation::getDetailByUnique('id', $org['id']);
-			}
+            $orgIDList = OrgMap::getOrgList($profile->id);
+            foreach($orgIDList as $org) {
+                $profile->organazations[] = Organazation::getDetailByUnique('id', $org->id);
+            }
 
-			$profile['projects'] = Project::getRepo(['create_uid' => $profile['id']]);
-		} else{
-			$profile['projects'] = Project::getRepo(['org_id' => $profile['id']]);
-		}
-
+            $profile->projects = Project::getRepo(['create_uid' => $profile->id]);
+        } else {
+            $profile->projects = Project::getRepo(['org_id' => $profile->id]);
+        }
 
 		$data = [
 			'header'  => $user,
