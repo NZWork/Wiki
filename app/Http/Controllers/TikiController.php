@@ -9,6 +9,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Http\Commons\Response;
 use App\User;
 use App\Http\Commons\XToken;
 use App\NamePool;
@@ -20,6 +21,7 @@ use App\RepoMap;
 use App\UserAttr;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
+use function PHPSTORM_META\type;
 
 class TikiController extends Controller
 {
@@ -272,12 +274,36 @@ class TikiController extends Controller
 		return back()->withInput()->withErrors(['组织（或个人）下项目名已被使用']);
 	}
 
-	public function newFolder()
+	/**
+	 * 新建文件夹
+	 * @return $this|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+	 */
+	public function newFile()
 	{
 		$user = Session::get('user');
-		$id = Input::get('id');
 		$name = Input::get('name');
-
+		$repo_id = Input::get('id');
+		$parent = Session::get('dir_id');
+		$type = Input::get('type');
+		$cond = ['parent' => $parent, 'name' => $name];
+		$res = Project::getRepo($cond);
+		if($res){
+			return Response::json(400, [], '名称已被使用');
+		}
+		$data = [
+			'out_id'     => $repo_id,
+			'create_uid' => $user->uid,
+			'name'       => $name,
+			'parent'     => $parent,
+		];
+		if($type == 1){
+			$data['token'] = XToken::uuid();
+			$type = Relation::DIR_TYPE_FILE;
+		} else{
+			$type = Relation::DIR_TYPE_FOLDER;
+		}
+		Relation::addDir($data, $type);
+		return Response::json(200, [], '创建成功');
 	}
 
 	/**

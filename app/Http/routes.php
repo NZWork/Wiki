@@ -50,6 +50,7 @@ Route::group(['middleware' => ['web', 'login']], function () {
 	Route::get('/logout', 'UserController@logout');
 	Route::get('/center', 'TikiController@index');
 	Route::get('/open', 'TikiController@openDir');
+	Route::get('/newFile', 'TikiController@newFile');
 
 
 	Route::get('/setting', 'UserController@setting');
@@ -71,7 +72,7 @@ Route::group(['middleware' => ['web', 'login']], function () {
 
 
     Route::get('/{name?}', 'TikiController@profile');
-    Route::get('/{org?}/{repo?}/{token?}', 'TikiController@read');
+    Route::get('/{org?}/{repo?}', 'TikiController@read');
 });
 
 /**
