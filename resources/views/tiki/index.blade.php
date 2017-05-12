@@ -10,7 +10,11 @@
             <h4>x/马越大爷</h4>
         </div>
         <div class="col-xs-12 col-sm-6">
-            <a href="#" class="btn btn-sm btn-default">上一层</a>
+            <ol class="breadcrumb" style="background-color: transparent">
+                @foreach($path as $p)
+               <li><a href="/open?dir_id={{ $p['dir_id'] }}">{{ $p['name'] }}</a></li>
+               @endforeach
+            </ol>
         </div>
         <div class="col-xs-12 col-sm-3 col-sm-offset-3">
             <div class="btn-group">
@@ -28,14 +32,20 @@
         </div>
     </div>
     <div class="row m-t-30">
-        <a class="file-list" href="/edit/1/1">
+        @foreach($dir as $file)
+        @if($file['type'] == 1)
+        <!-- 文档 -->
+        <a class="file-list" href="/edit/{{ $file['id'] }}/{{ $file['out_id'] }}" data-type="{{ $file['type'] }}">
             <img src="https://pbs.twimg.com/profile_images/831518614561837058/ytvJfYOx_400x400.jpg" width="64px">
-            <p class="text-center"> 马越GayHub.avi </p>
+            <p class="text-center">{{ $file['name'] }}</p>
         </a>
-        <a class="file-list" href="#">
-            <img src="images/file.png" width="64px">
-            <p class="text-center">test-file</p>
+        @else
+        <a class="file-list" href="/open?dir_id={{ $file['id'] }}" data-type="{{ $file['type'] }}">
+            <img src="https://pbs.twimg.com/profile_images/831518614561837058/ytvJfYOx_400x400.jpg" width="64px">
+            <p class="text-center">{{ $file['name'] }}</p>
         </a>
+        @endif
+        @endforeach
     </div>
 </div>
 <!-- end container -->
