@@ -282,7 +282,6 @@ class TikiController extends Controller
 	{
 		$user = Session::get('user');
 		$name = Input::get('name');
-		$repo_id = Input::get('id');
 		$parent = Session::get('dir_id');
 		$type = Input::get('type');
 		$cond = ['parent' => $parent, 'name' => $name];
@@ -290,8 +289,9 @@ class TikiController extends Controller
 		if($res){
 			return Response::json(400, [], '名称已被使用');
 		}
+		$rela = Relation::getById($parent);
 		$data = [
-			'out_id'     => $repo_id,
+			'out_id'     => $rela['out_id'],
 			'create_uid' => $user->uid,
 			'name'       => $name,
 			'parent'     => $parent,
