@@ -7,6 +7,7 @@ use App\Http\Commons\Curl;
 use App\Http\Commons\Response;
 use App\Http\Commons\XToken;
 use App\Relation;
+use App\RepoMap;
 use Illuminate\Support\Facades\Session;
 use Input;
 use App\Def;
@@ -28,10 +29,11 @@ class MarkDownController extends Controller
 		/*$id = Input::get('id');
 		$project_id = Input::get('pid');*/
 		$user = Session::get('user');
-		if(empty($id) || empty($project_id)){
+		$token = Relation::getToken($project_id, $id, Relation::DIR_TYPE_FILE)['token'];
+		$check = RepoMap::checkEdit($user->uid, $project_id);
+		if((empty($id) || empty($project_id) || empty($token)) || empty($check)){
 			return view('errors.mdzz');
 		}
-		$token = Relation::get($project_id, $id)['token'];
 		if(!RedisDB::exists(Def::REDIS_MARKDOWN_KEY . $project_id . "_$token")){
 			$md = file_get_contents(Def::MARKDOWN_ROOT_PATH . "/$project_id/" . Def::MARKDOWN_TYPE_ORIGIN_PATH . "/$token");
 			RedisDB::set(Def::REDIS_MARKDOWN_KEY . $project_id . "_$token", $md);

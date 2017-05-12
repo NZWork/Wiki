@@ -12,55 +12,87 @@ use Illuminate\Database\Eloquent\Model;
 
 class Relation extends Model
 {
-    //protected $table = '';
+	const DIR_TYPE_USER = 1;
+	const DIR_TYPE_FILE = 1;
+	const DIR_TYPE_FOLDER = 2;
+	const DIR_TYPE_REPO = 3;
+	const DIR_TYPE_ORG = 4;
+	//protected $table = '';
 
-    /**
-     * 获取markdown文件信息
-     * @param int $pid
-     * @param int $id
-     * @return array
-     */
-    protected function get($pid = 0, $id = 0)
-    {
-        if(empty($pid) || empty($id)){
-            return [];
-        }
-        $cond = [
-            'id' => $id,
-            'project_id' => $pid,
-        ];
-        return $this->where($cond)->first();
-    }
+	/**
+	 * 获取markdown文件信息
+	 * @param int $pid
+	 * @param int $id
+	 * @return array
+	 */
+	protected function getToken($out_id = 0, $id = 0, $type = self::DIR_TYPE_FILE)
+	{
+		if(empty($out_id) || empty($id)){
+			return [];
+		}
+		$cond = [
+			'id'     => $id,
+			'out_id' => $out_id,
+			'type'   => $type
+		];
+		return $this->where($cond)->first();
+	}
 
-    /**
-     * 落盘 校验
-     * @param int $pid
-     * @param string $token
-     * @return bool
-     */
-    protected function checkSetStroage($pid = 0 , $token = '')
-    {
-        $cond = [
-            'project_id' => $pid,
-            'token' => $token,
-        ];
-        return (bool)$this->where($cond)->first();
-    }
+	/**
+	 * 落盘 校验
+	 * @param int    $pid
+	 * @param string $token
+	 * @return bool
+	 */
+	protected function checkSetStroage($out_id = 0, $token = '', $type = self::DIR_TYPE_REPO)
+	{
+		$cond = [
+			'out_id' => $out_id,
+			'token'  => $token,
+			'type'   => $type
+		];
+		return (bool)$this->where($cond)->first();
+	}
 
-    /**
-     * 获取项目下所有markdown文件
-     * @param int $project_id
-     * @return array
-     */
-    protected function getByProject($project_id = 0)
-    {
-        $project_id = intval($project_id);
-        if(!$project_id){
-            return [];
-        }
-        $cond = [
-            'project_id' => $project_id,
-        ];
-        return $this->where($cond)->where('token','!=','')->get();
-    }
+	/**
+	 * 获取项目下所有markdown文件
+	 * @param int $project_id
+	 * @return array
+	 */
+	protected function getByProject($out_id = 0, $type = self::DIR_TYPE_REPO)
+	{
+		$out_id = intval($out_id);
+		if(!$out_id){
+			return [];
+		}
+		$cond = [
+			'out_id' => $out_id,
+			'type'   => $type
+		];
+		return $this->where($cond)->where('token', '!=', '')->get();
+	}
+
+	/**
+	 * 添加记录
+	 * @param     $data
+	 * @param int $type
+	 * @return array
+	 */
+	protected function addDir($data, $type = self::DIR_TYPE_REPO)
+	{
+		if(empty($data)){
+			return [];
+		}
+		$data['type'] = $type;
+		return $this->insertGetId($data);
+	}
+
+	protected function getId($out_id = 0, $type = self::DIR_TYPE_ORG)
+	{
+		$cond = [
+			'out_id' => $out_id,
+			'type'   => $type
+		];
+		return $this->where($cond)->first();
+	}
 }
