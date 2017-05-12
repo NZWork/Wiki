@@ -214,7 +214,6 @@ body {
 .file-list:hover {
     color: #bdc5c7;
     text-decoration: none;
-    display: block;
 }
 
 .file-list img {
@@ -223,6 +222,10 @@ body {
     margin: auto;
     height: 60px;
     width: 60px;
+}
+
+.file-list:hover>.delete {
+    display: block;
 }
 
 .file-list .delete {
