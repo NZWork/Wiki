@@ -11,7 +11,7 @@
                     <a class="btn btn-sm btn-default" href="#" role="button"><i class="fa fa-star" aria-hidden="true"></i> Start 23,123</a>
                 </div>
             </h3>
-            <p class="text-muted">Updated 5 months ago</p>
+            <p class="text-muted">{{ $data['updated_at'] }}</p>
             <div class="jumbotron">
                 <p><a class="btn btn-success btn-md w-lg pull-right">立即阅读</a></p>
                 <h1>{{ $data['name'] }}</h1>
