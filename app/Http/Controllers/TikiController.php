@@ -106,7 +106,6 @@ class TikiController extends Controller
 						'out_id' => $rela['out_id'],
 						'name'   => $rela['name'],
 						'type'   => $rela['type'],
-						'token'  => $rela['token']
 					];
 				}
 			}
@@ -274,10 +273,20 @@ class TikiController extends Controller
 	{
 		$user = Session::get('user');
 		$repo_id = Input::get('id');
+		$res = Project::getById($repo_id);
+		if(empty($res)){
+			return view('errors.404');
+		}
+		$org = $res->org_id ? Organazation::getNameById($res->org_id) : $user->name;
 		$data = [
 			'header' => $user,
 			'data'   => [
-
+				'org'         => $org,
+				'id'          => $res['id'],
+				'name'        => $res['name'],
+				'description' => $res['description'],
+				'website'     => $res['website'],
+				'updated_at'  => $res['updated_at'],
 			]
 		];
 		return view('tiki.project')->with($data);

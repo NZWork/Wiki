@@ -49,6 +49,8 @@ Route::group(['middleware' => ['web']], function () {
 Route::group(['middleware' => ['web', 'login']], function () {
 	Route::get('/logout', 'UserController@logout');
 	Route::get('/center', 'TikiController@index');
+	Route::get('/open', 'TikiController@openDir');
+
 
 	Route::get('/setting', 'UserController@setting');
 	Route::post('/nameSetting', 'UserController@nameSetting');
@@ -61,7 +63,7 @@ Route::group(['middleware' => ['web', 'login']], function () {
 	Route::get('/newRepo', 'TikiController@newRepo');
 	Route::post('/createRepo', 'TikiController@createRepo');
 
-	Route::get('/project', 'TikiController@project');
+	Route::get('/project/{id?}', 'TikiController@project');
 	Route::get('/projectSetting', 'TikiController@projectSetting');
 	Route::post('/repoSetting', 'TikiController@repoSetting');
 
@@ -69,7 +71,7 @@ Route::group(['middleware' => ['web', 'login']], function () {
 
 
     Route::get('/{name?}', 'TikiController@profile');
-    Route::get('/{name?}/{project?}', 'TikiController@read');
+    Route::get('/{org?}/{repo?}/{token?}', 'TikiController@read');
 });
 
 /**

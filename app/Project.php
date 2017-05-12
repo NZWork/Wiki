@@ -21,12 +21,32 @@ class Project extends Model
 		return $this->where($cond)->first();
 	}
 
+	/**
+	 * 新建项目
+	 * @param array $data
+	 * @return array
+	 */
 	protected function addRepo($data = [])
 	{
 		if(empty($data)){
 			return [];
 		}
 		return $this->insertGetId($data);
-    }
+	}
+
+	/**
+	 * 获取项目
+	 * @param $id
+	 * @return array
+	 */
+	protected function getById($id)
+	{
+		$id = intval($id);
+		if(empty($id)){
+			return [];
+		}
+		$cond = ['id' => $id];
+		return $this->where($cond)->first();
+	}
 
 }
