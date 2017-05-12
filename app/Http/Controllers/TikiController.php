@@ -390,19 +390,21 @@ class TikiController extends Controller
 		}
 		$userList = RepoMap::getUserList($repo_id);
 		$users = [];
-		foreach($userList as $user){
-			$info = User::getUserById($user['uid']);
+		foreach($userList as $item){
+			$temp = User::getUserById($item['uid']);
 			$users[] = [
-				'uid' => $info['id'],
-				'name' => $info['name'],
-				'email' => $info['email']
+				'uid'   => $temp['id'],
+				'name'  => $temp['name'],
+				'email' => $temp['email']
 			];
 		}
+		$org = Organazation::getNameById($info['org_id']);
+		$title = ($org ?: $user->name) . '/' . $info['name'];
 		$data = [
-			'header'    => $user,
-			'form_data' => [
-
-			]
+			'header'      => $user,
+			'users'       => $users,
+			'title'       => $title,
+			'description' => $info['description']
 		];
 		return view('tiki.projectSetting')->with($data);
 	}
