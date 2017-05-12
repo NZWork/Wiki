@@ -82,7 +82,8 @@ class Organazation extends Model
             'out_id' => $org['id'],
             'type' => 2,
         ])->first();
-        $detail = array_merge($org, $attr);
+
+        $detail = array_merge(json_decode(json_encode($org), true), $attr);
         return $datail;
     }
 

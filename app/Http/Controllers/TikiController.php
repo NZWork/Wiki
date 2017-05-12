@@ -48,7 +48,7 @@ class TikiController extends Controller
             return view('errors.404')->withHeader($user);
         }
 
-        if (isUserProfile) {
+        if ($isUserProfile) {
             $profile['organazations'] = array();
 
             $orgIDList = OrgMap::getOrgList($profile['id']);
