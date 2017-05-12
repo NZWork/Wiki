@@ -71,4 +71,19 @@ class RepoMap extends Model
 		return $this->where($cond)->first();
 	}
 
+	/**
+	 * 删除权限
+	 * @param $id
+	 * @return array
+	 */
+	protected function delMap($id)
+	{
+		$id = intval($id);
+		if(empty($id)){
+			return [];
+		}
+		$cond = ['id' => $id];
+		return $this->where($cond)->delete();
+	}
+
 }

@@ -35,6 +35,22 @@ class Project extends Model
 	}
 
 	/**
+	 * 更新数据
+	 * @param array $data
+	 * @param int   $id
+	 * @return array
+	 */
+	protected function updateRepo($data = [], $id = 0)
+	{
+		$id = intval($id);
+		if(empty($id) || empty($data)){
+			return [];
+		}
+		$cond = ['id' => $id];
+		return $this->where($cond)->update($data);
+	}
+
+	/**
 	 * 获取项目
 	 * @param $id
 	 * @return array

@@ -68,12 +68,15 @@ Route::group(['middleware' => ['web', 'login']], function () {
 	Route::get('/project/{id?}', 'TikiController@project');
 	Route::get('/projectSetting/{id?}', 'TikiController@projectSetting');
 	Route::post('/repoSetting', 'TikiController@repoSetting');
+	Route::post('/addRepoUser', 'TikiController@addRepoUser');
+	Route::post('/delRepo', 'TikiController@delRepo');
+	Route::post('/delRepoUser', 'TikiController@delRepoUser');
 
-    Route::get('/edit/{pid?}/{id?}', 'MarkDownController@getStroageFile');
+	Route::get('/edit/{pid?}/{id?}', 'MarkDownController@getStroageFile');
 
 
-    Route::get('/{name?}', 'TikiController@profile');
-    Route::get('/{org?}/{repo?}', 'TikiController@read');
+	Route::get('/{name?}', 'TikiController@profile');
+	Route::get('/{org?}/{repo?}', 'TikiController@read');
 });
 
 /**
@@ -86,7 +89,6 @@ Route::group(['middleware' => ['web', 'xauth']], function () {
 	Route::post('/api/nz/generate', 'MarkDownController@generateWiki');
 	Route::post('/api/nz/identity', 'MarkDownController@xtokenAuth');
 });
-
 
 
 //test
