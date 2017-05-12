@@ -381,17 +381,22 @@ class TikiController extends Controller
 	 * 项目管理页
 	 * @return $this
 	 */
-	public function projectSetting()
+	public function projectSetting($repo_id)
 	{
 		$user = Session::get('user');
-		$repo_id = Input::get('id');
 		$info = Project::getById($repo_id);
 		if(!RepoMap::checkAuth($user->uid, $repo_id)){
-			return view('errors.404');
+			return view('errors.mdzz');
 		}
 		$userList = RepoMap::getUserList($repo_id);
+		$users = [];
 		foreach($userList as $user){
-			
+			$info = User::getUserById($user['uid']);
+			$users[] = [
+				'uid' => $info['id'],
+				'name' => $info['name'],
+				'email' => $info['email']
+			];
 		}
 		$data = [
 			'header'    => $user,

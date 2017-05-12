@@ -66,7 +66,7 @@ Route::group(['middleware' => ['web', 'login']], function () {
 	Route::post('/createRepo', 'TikiController@createRepo');
 
 	Route::get('/project/{id?}', 'TikiController@project');
-	Route::get('/projectSetting', 'TikiController@projectSetting');
+	Route::get('/projectSetting/{id?}', 'TikiController@projectSetting');
 	Route::post('/repoSetting', 'TikiController@repoSetting');
 
     Route::get('/edit/{pid?}/{id?}', 'MarkDownController@getStroageFile');
