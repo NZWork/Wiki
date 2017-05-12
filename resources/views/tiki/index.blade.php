@@ -5,17 +5,15 @@
 <!-- container -->
 <div class="container">
     <div class="row">
-        <div class="col-xs-12 m-b-10">
-            <h4>x/马越大爷</h4>
-        </div>
         <div class="col-xs-12 col-sm-6">
             <ol class="breadcrumb" style="background-color: transparent">
-                @foreach($path as $p)
+               @foreach($path as $p)
                <li><a href="/open?dir_id={{ $p['dir_id'] }}">{{ $p['name'] }}</a></li>
                @endforeach
             </ol>
         </div>
         <div class="col-xs-12 col-sm-3 col-sm-offset-3">
+            @if(count($path) == 1)
             <div class="btn-group">
                 <a href="#" class="btn btn-sm btn-info">新建</a>
                 <a href="#" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><span class="caret"></span></a>
@@ -24,6 +22,7 @@
                     <li><a onclick="newDirOrFile(false)">目录</a></li>
                 </ul>
             </div>
+            @endif
             <div class="pull-right">
                 <a href="#" class="btn btn-sm btn-default">生成 Wiki</a>
                 <a href="#" class="btn btn-sm btn-default">设置</a>
@@ -69,11 +68,32 @@
                 if (inputValue === false) return false;
 
                 if (inputValue === "") {
-                    swal.showInputError("You need to write something!");
+                    swal.showInputError("命名不可为空");
                     return false
                 }
 
-                swal("Nice!", "You wrote: " + inputValue, "success");
+                $.ajax({
+                    type: "POST",
+                    url: "/newFile",
+                    data: {
+                        id: {{ $out_id }},
+                        name: inputValue,
+                        type: isFile ? 1 : 2
+                    },
+                    cache: false,
+                    success: function(data) {
+                        if (data.code == 200) {
+                            swal('创建成功')
+                            setTimeout("location.reload()", 1000);
+                        } else {
+                            // 提示删除失败
+                            swal.showInputError(data.msg)
+                        }
+                    },
+                    error: function() {
+                        swal.showInputError('网络异常')
+                    }
+                });
             });
     }
 </script>
