@@ -33,13 +33,28 @@
         @foreach($dir as $file)
         @if($file['type'] == 1)
         <!-- 文档 -->
-        <a class="file-list" href="/edit/{{ $file['id'] }}/{{ $file['out_id'] }}" data-type="{{ $file['type'] }}">
-            <img src="https://pbs.twimg.com/profile_images/831518614561837058/ytvJfYOx_400x400.jpg" width="64px">
-            <p class="text-center">{{ $file['name'] }}</p>
-        </a>
+        <div class="file-list">
+            <svg class="icon" aria-hidden="true" style="width: 64px" onclick="deleteFile('{{ $file['id'] }}')">
+                <use xlink:href="#icon-shanchudelete31"></use>
+            </svg>
+            <a target="_blank" href="/edit/{{ $file['out_id'] }}/{{ $file['id'] }}">
+                <svg class="icon" aria-hidden="true" style="width: 64px">
+                  <use xlink:href="#icon-wenjian"></use>
+                </svg>
+                <p class="text-center">{{ $file['name'] }}</p>
+            </a>
+        </div>
         @else
-        <a class="file-list" href="/open?dir_id={{ $file['id'] }}" data-type="{{ $file['type'] }}">
-            <img src="https://pbs.twimg.com/profile_images/831518614561837058/ytvJfYOx_400x400.jpg" width="64px">
+        <a class="file-list" href="/open?dir_id={{ $file['id'] }}">
+            <svg class="icon" aria-hidden="true" style="width: 64px">
+                @if($file['type'] == 2)
+                <use xlink:href="#icon-wenjianjia"></use>
+                @elseif($file['type'] == 3)
+                <use xlink:href="#icon-project"></use>
+                @elseif($file['type'] == 4)
+                <use xlink:href="#icon-zuzhi_hover"></use>
+                @endif
+            </svg>
             <p class="text-center">{{ $file['name'] }}</p>
         </a>
         @endif
@@ -83,7 +98,7 @@
                     success: function(data) {
                         if (data.code == 200) {
                             swal('创建成功')
-                            setTimeout("location.reload()", 1000);
+                            setTimeout("location.reload()", 500);
                         } else {
                             // 提示删除失败
                             swal.showInputError(data.msg)
@@ -94,5 +109,39 @@
                     }
                 });
             });
+    }
+
+    function deleteFile(id) {
+        swal({
+          title: "确认删除",
+          type: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#DD6B55",
+          confirmButtonText: "删除",
+          cancelButtonText: "取消",
+          closeOnConfirm: false
+        },
+        function(){
+            $.ajax({
+                type: "POST",
+                url: "/deleteFile",
+                data: {
+                    'id': id,
+                },
+                cache: false,
+                success: function(data) {
+                    if (data.code == 200) {
+                        swal('删除成功')
+                        setTimeout("location.reload()", 500);
+                    } else {
+                        // 提示删除失败
+                        swal.showInputError(data.msg)
+                    }
+                },
+                error: function() {
+                    swal.showInputError('网络异常')
+                }
+            });
+        });
     }
 </script>
